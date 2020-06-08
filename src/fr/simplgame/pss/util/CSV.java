@@ -8,11 +8,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-// Fichier permettant la lecture des fichiers CSV sans aucune dificultÃ©
+// Fichier permettant la lecture des fichiers CSV sans aucune dificulté
 public class CSV {
-	// SÃ©parateur logique de chaque donnÃ©es par ligne
+	// Séparateur logique de chaque données par ligne
 	public static String separator = ";";
 	
+	/**
+	 * Permet de  lire le contenu d'une cellule
+	 * @param key Nom de colonne
+	 * @param var Nom de ligne (ID)
+	 * @param file Chemin vers le fichier ciblé
+	 * @return Retourne le contenu de la cellule. Si inconnu, alors null
+	 */
 	public static String getCell(String key, String var, String file) {
 		try (FileInputStream fis = new FileInputStream(new File(file))) {
 			Scanner sc = new Scanner(fis);
@@ -41,6 +48,12 @@ public class CSV {
 		return "NaN";
 	}
 
+	/**
+	 * Récupération d'un ligne entière
+	 * @param key Nom de ligne (ID)
+	 * @param file Chemin vers le fichier ciblé
+	 * @return Retourne le contenu de la cellule. Si inconnu, alors null
+	 */
 	public static String getLine(String key, String file) {
 		try (FileInputStream fis = new FileInputStream(new File(file))) {
 			Scanner sc = new Scanner(fis);
