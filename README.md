@@ -8,5 +8,6 @@ Version de base.
   * Français
   * English
   * 日本語
+  * Commande `.setlang` et `.getlang`
 
 **Commande `.help`**, version bêta. Comprend toutes les commandes de la version Alpha.
