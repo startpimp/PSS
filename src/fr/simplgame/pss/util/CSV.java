@@ -8,10 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+// Fichier permettant la lecture des fichiers CSV sans aucune dificulté
 public class CSV {
-
+	// Séparateur logique de chaque données par ligne
 	public static String separator = ";";
-
+	
 	public static String getCell(String key, String var, String file) {
 		try (FileInputStream fis = new FileInputStream(new File(file))) {
 			Scanner sc = new Scanner(fis);
