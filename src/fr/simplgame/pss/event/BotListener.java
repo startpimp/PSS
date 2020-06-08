@@ -14,14 +14,23 @@ import net.dv8tion.jda.api.events.GenericEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.EventListener;
 
+/**
+ * Permet l'écoute de chaque event
+ * @author StartPimp47
+ *
+ */
 public class BotListener implements EventListener {
 
 	private final CommandMap commandMap;
 
+	/**
+	 * Initialisation de la class BotListener
+	 * @param commandMap Liste de toute les commandes
+	 */
 	public BotListener(CommandMap commandMap) {
 		this.commandMap = commandMap;
 	}
-
+	
 	@Override
 	public void onEvent(GenericEvent event) {
 		if (event instanceof MessageReceivedEvent)
@@ -47,7 +56,14 @@ public class BotListener implements EventListener {
 					getUserLang(mre.getAuthor(), mre.getTextChannel()), mre.getTextChannel());
 		}
 	}
-
+	
+	/**
+	 * Permet de récupérer la langue de l'utilisateur
+	 * 
+	 * @param user
+	 * @param channel
+	 * @return
+	 */
 	public static String getUserLang(User user, MessageChannel channel) {
 		// Getting user's language
 		String userLang = CSV.getCell(user.getId(), "language", "./res/user.csv");

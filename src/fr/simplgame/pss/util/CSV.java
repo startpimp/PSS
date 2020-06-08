@@ -10,20 +10,21 @@ import java.util.Scanner;
 
 /**
  * Fichier permettant la lecture des fichiers CSV sans aucune dificulté
+ * 
  * @author StartPimp47
  *
  */
 public class CSV {
 	/**
-	 * Séparateur logique de chaque données par ligne
-	 * Par défaut, il est sur ' ; '.
+	 * Séparateur logique de chaque données par ligne Par défaut, il est sur ' ; '.
 	 */
 	public static String separator = ";";
-	
+
 	/**
-	 * Permet de  lire le contenu d'une cellule
-	 * @param key Nom de colonne
-	 * @param var Nom de ligne (ID)
+	 * Permet de lire le contenu d'une cellule
+	 * 
+	 * @param key  Nom de colonne
+	 * @param var  Nom de ligne (ID)
 	 * @param file Chemin vers le fichier ciblé
 	 * @return Retourne le contenu de la cellule. Si inconnu, alors "NaN"
 	 */
@@ -57,9 +58,11 @@ public class CSV {
 
 	/**
 	 * Récupération d'un ligne entière
-	 * @param key Nom de ligne (ID)
+	 * 
+	 * @param key  Nom de ligne (ID)
 	 * @param file Chemin vers le fichier ciblé
-	 * @return Retourne la ligne sous forme de String avec le séparateur. Si inconnu, alors "NaN"
+	 * @return Retourne la ligne sous forme de String avec le séparateur. Si
+	 *         inconnu, alors "NaN"
 	 */
 	public static String getLine(String key, String file) {
 		try (FileInputStream fis = new FileInputStream(new File(file))) {
@@ -83,8 +86,9 @@ public class CSV {
 
 	/**
 	 * Récupération d'un colonne entière
+	 * 
 	 * @param title Nom de colonne
-	 * @param file Chemin vers le fichier ciblé
+	 * @param file  Chemin vers le fichier ciblé
 	 * @return Retourne la colonne sous forme de List. Si inconnu, alors null
 	 */
 	public static List<String> getColumn(String title, String file) {
@@ -114,7 +118,8 @@ public class CSV {
 
 	/**
 	 * Récupération de l'ID de la cellule
-	 * @param var Nom de colonne
+	 * 
+	 * @param var  Nom de colonne
 	 * @param word Contenu de la cellule
 	 * @param file Chemin vers le fichier ciblé
 	 * @return Retourne l'ID de la cellule. Si inconnu, alors "NaN"
@@ -151,7 +156,9 @@ public class CSV {
 
 	/**
 	 * Ajouter une ligne au fichier
-	 * @param line Ligne entière sous forme de String. Chaque donnée devra être séparée par le séparateur principal
+	 * 
+	 * @param line Ligne entière sous forme de String. Chaque donnée devra être
+	 *             séparée par le séparateur principal
 	 * @param file chemin vers le fichier ciblé
 	 */
 	public static void addLine(String line, String file) {
@@ -168,10 +175,11 @@ public class CSV {
 
 	/**
 	 * Modifier une cellule
-	 * @param key Nom de ligne (ID)
-	 * @param var Nom de colonne
+	 * 
+	 * @param key     Nom de ligne (ID)
+	 * @param var     Nom de colonne
 	 * @param content Nouveau contenu
-	 * @param file Chemin vers le fichier ciblé
+	 * @param file    Chemin vers le fichier ciblé
 	 */
 	public static void modifyCell(String key, String var, String content, String file) {
 
