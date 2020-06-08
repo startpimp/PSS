@@ -1,0 +1,33 @@
+id;english;français;日本語
+help_title;List of commands;Liste des commandes;コマンドのリスト
+help_desc;Allows you to see this help message.;Permet d'afficher le présent message.;このメッセージを表示します。
+help_embed;Here are all the commands offered by PSS.\nAll these commands are of course executable if you have permission to do so.;Voici toutes les commandes proposées par PSS.\nToutes ces commandes sont bien sûr exécutables si vous avez la permission de le faire.;ここにはPSSが提案しましたすべてのコマンドがあります。\n許可を得ろば、このすべてのコマンドが実行可能になります。
+help_footer;Developed by ブション・スタニスラス.;Développé par ブション・スタニスラス.;ブション・スタニスラスが開発しました。
+ping_desc;Allows you to know the response time of the bot in milliseconds.;Permet de connaître le temps de réponse qu'a le bot en millisecondes.;ミリ秒でボットの応答時間を知ります。
+ping_response;Response time is [NUMBER]ms.;Le temps de réponse est de [NUMBER]ms.;応答時間は[NUMBER]ミリ秒です。
+help_response;[USER_MENTION], the help message was sent to you as a private message. Please take a look at it.;[USER_MENTION], le message d'aide vous a été envoyé sous forme de message privé. Veuillez y jeter un coup d'œil.;[USER_MENTION]、ヘルプのメッセージはプライベートメッセージが送ります。プライベートメッセージをチラ見しますください。
+help_adminfield;Administrator;Administrateur;管理者
+help_usefulfield;Useful;Utile;便利な
+help_economyfield;Economy;Économie;経済
+double_dot;: ; : ;：
+dash; - ; - ;－
+comma_and;, ;, ;と
+and_word; and ; et ;と
+point;. ;. ;。
+help_type_other;Other;Autre;別物
+help_type_server;Server;Serveur;サーバー
+help_type_security;Security;Sécurité;セキュリティ
+getlang_desc;Allows you to know all the available languages.;Permet de connaître toutes les langues disponibles.;すべての利用可能な言語を知ります。
+getlang_response;Here are all the available languages;Voici toutes les langues disponibles;ここには、すべての利用可能な言語です
+setlang_syntax; [language]; [langue];［言語］
+setlang_desc;Allows you to change your display language. The language (`[language]`) should be written in its original language.;Permet de changer votre langue d'affichage. La langue (`[langue]`) doit être écrite dans sa lange d'origine.;表示言語を変更することができます。言語（`［言語］`）は原語で書かれていなければならない。
+setlang_response;Success: The language was changed to [LANG].;Succès : la langue a été changée en [LANG].;成功：言語が[LANG]に変更されました。
+setlang_error;Error: The language `[LANG]` doesn't exist.;Erreur : la langue `[LANG]` n'existe pas.;エラー：言語`[LANG]`は存在しません。
+bank_desc;Allows you to know how much money you have.;Permet de connaître l'argent que vous possédez.;あなたどれだけのお金か持つを知ることができます。
+bank_response;You have:\n[+] [MONEY]Ŧ\n[SENTENCE];Vous avez :\n[] [MONEY]Ŧ\n[SENTENCE];持っているもの：\n[] [MONEY]Ŧ\n[SENTENCE]
+bank_response_positive;You don't lack anything.;Vous ne manquez de rien.;何も欠如しません。
+bank_response_negative;You're in debt.;Vous êtes endetté.;借金をしているんです。
+français_lang;French;Français;フランス語
+english_lang;English;Anglais;英語
+日本語_lang;Japanese;Japonais;日本語
+private_message_recieved;[USER_MENTION], please take a look at your private messages.;[USER_MENTION], veuillez vérifier vos messages privés.;[USER_MENTION]、プライベートメッセージが見てください。
