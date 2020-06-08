@@ -8,9 +8,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-// Fichier permettant la lecture des fichiers CSV sans aucune dificulté
+/**
+ * Fichier permettant la lecture des fichiers CSV sans aucune dificulté
+ * @author StartPimp47
+ *
+ */
 public class CSV {
-	// Séparateur logique de chaque données par ligne
+	/**
+	 * Séparateur logique de chaque données par ligne
+	 * Par défaut, il est sur ' ; '.
+	 */
 	public static String separator = ";";
 	
 	/**

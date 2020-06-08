@@ -26,8 +26,6 @@ public class BotListener implements EventListener {
 	public void onEvent(GenericEvent event) {
 		if (event instanceof MessageReceivedEvent)
 			onMessage((MessageReceivedEvent) event);
-		// To getting events name ->
-		// System.out.println(event.getClass().getSimpleName());
 	}
 
 	private void onMessage(MessageReceivedEvent mre) {
