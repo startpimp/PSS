@@ -57,7 +57,7 @@ public class BotListener implements EventListener {
 			userLang = "english";
 
 			// Adding user to user.csv
-			CSV.addCell(user.getId() + ";english;200;0;0;10", "./res/user.csv");
+			CSV.addLine(user.getId() + ";english;200;0;0;10", "./res/user.csv");
 
 			channel.sendMessage(
 					"You've been added to our language database. To change your language, do : `!lang [language]`. \n"
@@ -75,7 +75,7 @@ public class BotListener implements EventListener {
 			serverLang = "english";
 
 			// Adding user to user.csv
-			CSV.addCell(guild.getId() + ";" + guild.getOwnerId() + ";;engilsh", "./res/server.csv");
+			CSV.addLine(guild.getId() + ";" + guild.getOwnerId() + ";;engilsh", "./res/server.csv");
 
 			channel.sendMessage(
 					"The server has been added to our database due to missing language. To change the language, do : `!server lang [language]`. \n"
