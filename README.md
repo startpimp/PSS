@@ -9,4 +9,4 @@ Version de base.
   * English
   * 日本語
 
-**Commande `.help`**, version bêta.
+**Commande `.help`**, version bêta. Comprend toutes les commandes de la version Alpha.
