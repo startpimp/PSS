@@ -14,7 +14,7 @@ dash; - ; - ;－
 comma_and;, ;, ;と
 and_word; and ; et ;と
 point;. ;. ;。
-help_type_other;Other;Autre;別物
+help_type_other;Other;Autre;他
 help_type_server;Server;Serveur;サーバー
 help_type_security;Security;Sécurité;セキュリティ
 getlang_desc;Allows you to know all the available languages.;Permet de connaître toutes les langues disponibles.;すべての利用可能な言語を知ります。
@@ -24,10 +24,14 @@ setlang_desc;Allows you to change your display language. The language (`[languag
 setlang_response;Success: The language was changed to [LANG].;Succès : la langue a été changée en [LANG].;成功：言語が[LANG]に変更されました。
 setlang_error;Error: The language `[LANG]` doesn't exist.;Erreur : la langue `[LANG]` n'existe pas.;エラー：言語`[LANG]`は存在しません。
 bank_desc;Allows you to know how much money you have.;Permet de connaître l'argent que vous possédez.;あなたどれだけのお金か持つを知ることができます。
-bank_response;You have:\n[+] [MONEY]Ŧ\n[SENTENCE];Vous avez :\n[] [MONEY]Ŧ\n[SENTENCE];持っているもの：\n[] [MONEY]Ŧ\n[SENTENCE]
+bank_response;You have:\n[] [MONEY]Ŧ\n[SENTENCE];Vous avez :\n[] [MONEY]Ŧ\n[SENTENCE];持っているもの：\n[] [MONEY]Ŧ\n[SENTENCE]
 bank_response_positive;You don't lack anything.;Vous ne manquez de rien.;何も欠如しません。
 bank_response_negative;You're in debt.;Vous êtes endetté.;借金をしているんです。
 français_lang;French;Français;フランス語
 english_lang;English;Anglais;英語
 日本語_lang;Japanese;Japonais;日本語
 private_message_recieved;[USER_MENTION], please take a look at your private messages.;[USER_MENTION], veuillez vérifier vos messages privés.;[USER_MENTION]、プライベートメッセージが見てください。
+captialLetter_title;Capital Letters;Majuscules;
+capitalLetter_messageDef;Message: ;Message : ;メッセージ：
+capitalLetter_userDef;User: ;Utilisateur : ;ユーザー：
+logChannelNotAdded;[OWNER], please add a log channel to keep track of every member's every move.;[OWNER], veuillez ajouter un channel de log pour avoir tous les moindres faits et gestes de chaque membre.;

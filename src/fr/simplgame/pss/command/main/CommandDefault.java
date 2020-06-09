@@ -35,7 +35,7 @@ public class CommandDefault {
 		String userLang = BotListener.getUserLang(user, channel);
 
 		// Getting the bot's ping
-		long ping = jda.getGatewayPing();
+		int ping = (int) jda.getGatewayPing();
 
 		Color color;
 		// Setting the response color
@@ -49,7 +49,7 @@ public class CommandDefault {
 			color = Color.orange;
 		else
 			color = Color.red;
-
+		
 		String message = CSV.getCell("ping_response", userLang, "./res/langs.csv").replace("[NUMBER]", ping + "");
 
 		EmbedBuilder embed = new EmbedBuilder();

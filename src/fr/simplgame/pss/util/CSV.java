@@ -23,8 +23,8 @@ public class CSV {
 	/**
 	 * Permet de lire le contenu d'une cellule
 	 * 
-	 * @param key  Nom de colonne
-	 * @param var  Nom de ligne (ID)
+	 * @param key  Nom de ligne (ID)
+	 * @param var  Nom de colonne
 	 * @param file Chemin vers le fichier ciblé
 	 * @return Retourne le contenu de la cellule. Si inconnu, alors "NaN"
 	 */

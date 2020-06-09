@@ -1,5 +1,6 @@
 package fr.simplgame.pss.event;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -7,7 +8,9 @@ import java.util.regex.Pattern;
 
 import fr.simplgame.pss.command.CommandMap;
 import fr.simplgame.pss.util.CSV;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.GenericEvent;
@@ -16,6 +19,7 @@ import net.dv8tion.jda.api.hooks.EventListener;
 
 /**
  * Permet l'écoute de chaque event
+ * 
  * @author StartPimp47
  *
  */
@@ -25,12 +29,13 @@ public class BotListener implements EventListener {
 
 	/**
 	 * Initialisation de la class BotListener
+	 * 
 	 * @param commandMap Liste de toute les commandes
 	 */
 	public BotListener(CommandMap commandMap) {
 		this.commandMap = commandMap;
 	}
-	
+
 	@Override
 	public void onEvent(GenericEvent event) {
 		if (event instanceof MessageReceivedEvent)
@@ -52,11 +57,11 @@ public class BotListener implements EventListener {
 				}
 			}
 		} else {
-			verifyMessageContent(mre.getMessage().getContentRaw(),
-					getUserLang(mre.getAuthor(), mre.getTextChannel()), mre.getTextChannel());
+			verifyMessageContent(mre.getMessage().getContentRaw(), getUserLang(mre.getAuthor(), mre.getTextChannel()),
+					mre.getTextChannel(), mre.getGuild(), mre.getMessage());
 		}
 	}
-	
+
 	/**
 	 * Permet de récupérer la langue de l'utilisateur
 	 * 
@@ -73,10 +78,9 @@ public class BotListener implements EventListener {
 			// Adding user to user.csv
 			CSV.addLine(user.getId() + ";english;200;0;0;10", "./res/user.csv");
 
-			channel.sendMessage(
-					"You've been added to our language database. To change your language, do : `!lang [language]`. \n"
-							+ "To view all languages avaible, do `!languages`.")
-					.queue();
+			channel.sendMessage("You've been added to our language database. To change your language, do : `"
+					+ CommandMap.tag + "lang [language]`. \n" + "To view all languages avaible, do `" + CommandMap.tag
+					+ "getlang`.").queue();
 		}
 
 		return userLang.toLowerCase();
@@ -89,34 +93,81 @@ public class BotListener implements EventListener {
 			serverLang = "english";
 
 			// Adding user to user.csv
-			CSV.addLine(guild.getId() + ";" + guild.getOwnerId() + ";;engilsh", "./res/server.csv");
+			CSV.addLine(guild.getId() + ";english;;true;false;false", "./res/server.csv");
 
 			channel.sendMessage(
-					"The server has been added to our database due to missing language. To change the language, do : `!server lang [language]`. \n"
-							+ "To view all languages avaible, do `!languages`.")
+					"The server has been added to our database due to missing language. To change the language, do : `"
+							+ CommandMap.tag + "server lang [language]`. \n" + "To view all languages avaible, do `"
+							+ CommandMap.tag + "getlang`.")
 					.queue();
 		}
 
 		return serverLang.toLowerCase();
 	}
 
-	public static void verifyMessageContent(String message, String lang, MessageChannel channel) {
+	public static void verifyMessageContent(String message, String lang, MessageChannel channel, Guild guild,
+			Message msg) {
 		lang = lang.toLowerCase();
+		String serverLang = getServerLang(guild, channel);
+		
+		String logID = CSV.getCell(guild.getId(), "log_channel", "./res/server.csv");
+		System.out.println(CSV.getCell(serverLang, "logChannelNotAdded", "./res/langs.csv"));
+		if(logID.equals("NaN") || logID.isEmpty()) {
+			channel.sendMessage(CSV.getCell(serverLang, "logChannelNotAdded", "./res/langs.csv")).queue();
+			return;
+		}
 
-		List<String> words = new ArrayList<>();
+		boolean cLD = Boolean.parseBoolean(CSV.getCell(guild.getId(), "capitalLetter", "./res/server.csv"));
+		boolean bWD = Boolean.parseBoolean(CSV.getCell(guild.getId(), "bannedWord", "./res/server.csv"));
+		boolean lD = Boolean.parseBoolean(CSV.getCell(guild.getId(), "link", "./res/server.csv"));
 
-		for (String word : CSV.getColumn(lang, "./res/bannedWords.csv")) {
-			Pattern detector = Pattern.compile("(\\s+|)(" + word + ")(\\s+|\\.+|\\?+|!+|)");
-			Matcher matcher = detector.matcher(message);
-
+		if (cLD) {
+			Pattern capitalLetter = Pattern.compile("([A-Z]+)");
+			Matcher matcher = capitalLetter.matcher(message);
 			if (matcher.find()) {
-				words.add(matcher.group(2));
+				if (matcher.groupCount() == 1) {
+					EmbedBuilder embed = new EmbedBuilder();
+					embed.setTitle(CSV.getCell(serverLang, "capitalLetter_title", "./res/langs.csv"));
+					embed.addField(msg.getAuthor().getName() + "#" + msg.getAuthor().getDiscriminator(),
+							CSV.getCell(serverLang, "capitalLetter_messageDef", "./res/langs.csv") + message, false);
+					embed.appendDescription("<@" + msg.getAuthor().getId() + ">");
+					embed.setColor(Color.RED);
+					guild.getTextChannelById(logID).sendMessage(embed.build()).queue();
+					msg.delete().queue();
+					return;
+				}
 			}
 		}
-		
-		if (words.size() >= 1) {
-			for (String string : words) {
-				System.out.println(string);
+
+		if (lD) {
+			Pattern link = Pattern.compile("(http(s)?://[a-zA-Z0-9./%?=_#&-]+)");
+			Matcher matcher = link.matcher(message);
+			if (matcher.find()) {
+				if (matcher.groupCount() == 1) {
+					EmbedBuilder embed = new EmbedBuilder();
+					embed.setTitle("");
+					embed.addField("", message, false);
+					embed.addField("", "", false);
+					return;
+				}
+			}
+		}
+
+		if (bWD) {
+			List<String> words = new ArrayList<>();
+			for (String word : CSV.getColumn(lang, "./res/bannedWords.csv")) {
+				Pattern detector = Pattern.compile("(\\s+|)(" + word.toLowerCase() + ")(\\s+|\\.+|\\?+|!+|)");
+				Matcher matcher = detector.matcher(message.toLowerCase());
+
+				if (matcher.find()) {
+					words.add(matcher.group(2));
+				}
+			}
+
+			if (words.size() >= 1) {
+				for (String string : words) {
+					System.out.println(string);
+				}
 			}
 		}
 
