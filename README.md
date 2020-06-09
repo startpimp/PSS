@@ -29,7 +29,7 @@ La détection des majuscules se fait simplement. Les caractères non-alphabétiq
 Les mots bannis font partie du langage de l'utilisateur et de celle du serveur où il se trouve.
 > (\s+|)(`MOT`)(\s+|\.+|\?+|!+|)
 
-Le `MOT` est l'insulte du langage ciblé dnas le message de l'utilisateur.
+Le `MOT` est l'insulte du langage ciblé dans le message de l'utilisateur.
 
 ### Liens
 Les liens sont facilement détectés dans un message grâce à l'occurence suivante.
