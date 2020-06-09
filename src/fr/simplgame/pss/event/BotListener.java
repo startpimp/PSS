@@ -93,7 +93,7 @@ public class BotListener implements EventListener {
 			serverLang = "english";
 
 			// Adding user to user.csv
-			CSV.addLine(guild.getId() + ";english;;true;false;false", "./res/server.csv");
+			CSV.addLine(guild.getId() + ";english;;;true;false;false", "./res/server.csv");
 
 			channel.sendMessage(
 					"The server has been added to our database due to missing language. To change the language, do : `"

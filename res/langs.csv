@@ -34,5 +34,7 @@ private_message_recieved;[USER_MENTION], please take a look at your private mess
 capitalLetter_title;Capital Letters;Majuscules;
 capitalLetter_messageDef;Message: ;Message : ;メッセージ：
 capitalLetter_userDef;User: ;Utilisateur : ;ユーザー：
-logChannelNotAdded;[OWNER], please add a log channel to keep track of every member's every move.;[OWNER], veuillez ajouter un channel de log pour avoir tous les moindres faits et gestes de chaque membre.;
-deletedCL;Your message has been deleted because it was only in capital letters.;Votre message a été supprimé car il contenait que des majuscules.;
+logChannelNotAdded;[OWNER], please add a log channel to keep track of every member's every move.;[OWNER], veuillez ajouter un channel de log pour avoir tous les moindres faits et gestes de chaque membre.;[OWNER]、各メンバーの各動きを表示するために、ログチャンネルを追加してください。
+deletedCL;Your message has been deleted because it was only in capital letters.;Votre message a été supprimé car il contenait que des majuscules.;あなたのメッセージは大文字を含みましたので、削除しました。
+deletedL;Your message has been deleted because it contained one or more links.;Votre message a été supprimé car il contenait un/des lien·s.;あなたのメッセージはリンクを含みましたので、削除しました。
+deletedBW;Your message has been deleted because it contained one or more insults.;Votre message a été supprimé car il contenait une/plusieurs insulte·s.;あなたのメッセージは侮辱を含みましたので、削除しました。
