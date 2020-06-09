@@ -143,7 +143,7 @@ public class BotListener implements EventListener {
 		}
 
 		if (lD) {
-			Pattern link = Pattern.compile("(http(s)?://[a-zA-Z0-9./%?=_#&-]+)");
+			Pattern link = Pattern.compile("(http(s)?://[a-zA-Z0-9./%?=_#&-\\+]+)");
 			Matcher matcher = link.matcher(message);
 			if (matcher.find()) {
 				if (matcher.groupCount() == 1) {
