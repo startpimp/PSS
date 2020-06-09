@@ -30,3 +30,9 @@ Les mots bannis font partie du langage de l'utilisateur et de celle du serveur o
 > (\s+|)(`MOT`)(\s+|\.+|\?+|!+|)
 
 Le `MOT` est l'insulte du langage ciblé dnas le message de l'utilisateur.
+
+### Liens
+Les liens sont facilement détectés dans un message grâce à l'occurence suivante.
+> (http(s)?://[a-zA-Z0-9./%?=_#&-]+)
+
+Ainsi, n'importe quel lien est retrouvé, à moins qu'il soit mal placé.
