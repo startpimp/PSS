@@ -21,3 +21,7 @@ Version de base.
  
 La détection des majuscules se fait simplement. Les caractères non-alphabétiques sont comptés comme étant des majuscules, ainsi que les espaces et les sauts de lignes. Le reste, tel que les miniscules, les lettres Coréennes, etc. ne sont pas comptés.
 > ^([^a-z0-9あ-んア-ンㄱ-희.]+)$
+
+Les mots bannis font partie du langage de l'utilisateur et de celle du serveur où il se trouve.
+> (\s+|)(`MOT`)(\s+|\.+|\?+|!+|)
+Le `MOT` est l'insulte du langage ciblé dnas le message de l'utilisateur.
