@@ -18,7 +18,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.EventListener;
 
 /**
- * Permet l'�coute de chaque event
+ * Permet l'écoute de chaque event
  * 
  * @author StartPimp47
  *
@@ -63,7 +63,7 @@ public class BotListener implements EventListener {
 	}
 
 	/**
-	 * Permet de r�cup�rer la langue de l'utilisateur
+	 * Permet de récupérer la langue de l'utilisateur
 	 * 
 	 * @param user
 	 * @param channel
@@ -109,11 +109,11 @@ public class BotListener implements EventListener {
 			Message msg) {
 		lang = lang.toLowerCase();
 		String serverLang = getServerLang(guild, channel);
-		
+
 		String logID = CSV.getCell(guild.getId(), "log_channel", "./res/server.csv");
-		System.out.println(CSV.getCell(serverLang, "logChannelNotAdded", "./res/langs.csv"));
-		if(logID.equals("NaN") || logID.isEmpty()) {
-			channel.sendMessage(CSV.getCell(serverLang, "logChannelNotAdded", "./res/langs.csv")).queue();
+		if (logID.equals("NaN") || logID.isEmpty()) {
+			channel.sendMessage(CSV.getCell("logChannelNotAdded", serverLang, "./res/langs.csv").replace("[OWNER]",
+					guild.getOwner().getAsMention())).queue();
 			return;
 		}
 
@@ -122,18 +122,21 @@ public class BotListener implements EventListener {
 		boolean lD = Boolean.parseBoolean(CSV.getCell(guild.getId(), "link", "./res/server.csv"));
 
 		if (cLD) {
-			Pattern capitalLetter = Pattern.compile("([A-Z]+)");
+			Pattern capitalLetter = Pattern.compile("^([^a-z0-9あ-んア-ンㄱ-희.]+)$");
 			Matcher matcher = capitalLetter.matcher(message);
 			if (matcher.find()) {
 				if (matcher.groupCount() == 1) {
 					EmbedBuilder embed = new EmbedBuilder();
-					embed.setTitle(CSV.getCell(serverLang, "capitalLetter_title", "./res/langs.csv"));
-					embed.addField(msg.getAuthor().getName() + "#" + msg.getAuthor().getDiscriminator(),
-							CSV.getCell(serverLang, "capitalLetter_messageDef", "./res/langs.csv") + message, false);
-					embed.appendDescription("<@" + msg.getAuthor().getId() + ">");
+					embed.setTitle(CSV.getCell("capitalLetter_title", serverLang, "./res/langs.csv"));
+					embed.addField(msg.getAuthor().getName() + "#" + msg.getAuthor().getDiscriminator(), "__**"
+							+ CSV.getCell("capitalLetter_messageDef", serverLang, "./res/langs.csv") + "**__" + message,
+							false);
+					embed.setFooter(CSV.getCell("capitalLetter_userDef", serverLang, "./res/langs.csv") + "<@"
+							+ msg.getAuthor().getId() + ">");
 					embed.setColor(Color.RED);
 					guild.getTextChannelById(logID).sendMessage(embed.build()).queue();
 					msg.delete().queue();
+					channel.sendMessage(CSV.getCell("deletedCL", lang, "./res/langs.csv")).queue();
 					return;
 				}
 			}

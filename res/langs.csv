@@ -31,7 +31,8 @@ français_lang;French;Français;フランス語
 english_lang;English;Anglais;英語
 日本語_lang;Japanese;Japonais;日本語
 private_message_recieved;[USER_MENTION], please take a look at your private messages.;[USER_MENTION], veuillez vérifier vos messages privés.;[USER_MENTION]、プライベートメッセージが見てください。
-captialLetter_title;Capital Letters;Majuscules;
+capitalLetter_title;Capital Letters;Majuscules;
 capitalLetter_messageDef;Message: ;Message : ;メッセージ：
 capitalLetter_userDef;User: ;Utilisateur : ;ユーザー：
 logChannelNotAdded;[OWNER], please add a log channel to keep track of every member's every move.;[OWNER], veuillez ajouter un channel de log pour avoir tous les moindres faits et gestes de chaque membre.;
+deletedCL;Your message has been deleted because it was only in capital letters.;Votre message a été supprimé car il contenait que des majuscules.;
