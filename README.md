@@ -10,4 +10,13 @@ Version de base.
   * 日本語
   * Commande `.setlang` et `.getlang`
 
-**Commande `.help`**, version bêta. Comprend toutes les commandes de la version Alpha.
+**Commande `.help`**, version bêta. Il comprend toutes les commandes de la version Alpha.
+
+## 0.0.1
+
+**Système de contrôle de contenu**.
+ * Majuscules
+ * Mots bannis
+ * Liens
+ 
+La détéction des majuscules se fait simplement les caractères non-alphabétiques 
