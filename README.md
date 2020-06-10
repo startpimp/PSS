@@ -26,7 +26,7 @@ La détection des majuscules se fait simplement. Les caractères non-alphabétiq
 > ^([^a-z0-9あ-んア-ンㄱ-희.]+)$
 
 ### Mots bannis
-Les mots bannis font partie du langage de l'utilisateur et de celle du serveur où il se trouve.
+Les mots bannis font partie du langage de l'utilisateur et de ceux du serveur où il se trouve.
 > (\s+|)(`MOT`)(\s+|\.+|\?+|!+|)
 
 Le `MOT` est l'insulte du langage ciblé dans le message de l'utilisateur.
