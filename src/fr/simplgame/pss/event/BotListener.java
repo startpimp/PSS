@@ -6,12 +6,16 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import fr.simplgame.pss.PSS;
 import fr.simplgame.pss.command.CommandMap;
 import fr.simplgame.pss.util.CSV;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.PrivateChannel;
+import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.GenericEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -44,6 +48,8 @@ public class BotListener implements EventListener {
 
 	private void onMessage(MessageReceivedEvent mre) {
 
+		ChannelType type = null;
+
 		// If the user is PSS, returning to the top function.
 		if (mre.getAuthor().equals(mre.getJDA().getSelfUser()))
 			return;
@@ -54,11 +60,16 @@ public class BotListener implements EventListener {
 			if (commandMap.commandUser(mre.getAuthor(), message, mre.getMessage())) {
 				if (mre.getTextChannel() != null) {
 					mre.getMessage().delete().queue();
+					type = mre.getTextChannel().getType();
+				} else if (mre.getPrivateChannel() != null) {
+					mre.getMessage().delete().queue();
+					type = mre.getPrivateChannel().getType();
 				}
 			}
 		} else {
-			verifyMessageContent(mre.getMessage().getContentRaw(), getUserLang(mre.getAuthor(), mre.getTextChannel()),
+			verifyMessageContent(mre.getMessage().getContentRaw(), getUserLang(mre.getAuthor(), type),
 					mre.getTextChannel(), mre.getGuild(), mre.getMessage());
+			mre.getMessage().getChannel().
 		}
 	}
 
@@ -69,7 +80,12 @@ public class BotListener implements EventListener {
 	 * @param channel
 	 * @return
 	 */
-	public static String getUserLang(User user, MessageChannel channel) {
+	public static String getUserLang(User user, ChannelType channel) {
+
+		String defaultMessage = "You've been added to our language database. To change your language, do : `"
+				+ CommandMap.tag + "lang [language]`. \n" + "To view all languages avaible, do `" + CommandMap.tag
+				+ "getlang`.";
+
 		// Getting user's language
 		String userLang = CSV.getCell(user.getId(), "language", "./res/user.csv");
 		if (userLang.equals("NaN")) {
@@ -78,15 +94,18 @@ public class BotListener implements EventListener {
 			// Adding user to user.csv
 			CSV.addLine(user.getId() + ";english;200;0;0;10", "./res/user.csv");
 
-			channel.sendMessage("You've been added to our language database. To change your language, do : `"
-					+ CommandMap.tag + "lang [language]`. \n" + "To view all languages avaible, do `" + CommandMap.tag
-					+ "getlang`.").queue();
+			sendMessage(defaultMessage, channel);
 		}
 
 		return userLang.toLowerCase();
 	}
 
 	public static String getServerLang(Guild guild, MessageChannel channel) {
+
+		String defaultMessage = "The server has been added to our database due to missing language. To change the language, do : `"
+				+ CommandMap.tag + "server lang [language]`. \n" + "To view all languages avaible, do `"
+				+ CommandMap.tag + "getlang`.";
+
 		// Getting user's language
 		String serverLang = CSV.getCell(guild.getId(), "language", "./res/server.csv");
 		if (serverLang.equals("NaN")) {
@@ -95,11 +114,7 @@ public class BotListener implements EventListener {
 			// Adding user to user.csv
 			CSV.addLine(guild.getId() + ";english;;;true;false;false", "./res/server.csv");
 
-			channel.sendMessage(
-					"The server has been added to our database due to missing language. To change the language, do : `"
-							+ CommandMap.tag + "server lang [language]`. \n" + "To view all languages avaible, do `"
-							+ CommandMap.tag + "getlang`.")
-					.queue();
+			channel.sendMessage(defaultMessage).queue();
 		}
 
 		return serverLang.toLowerCase();
@@ -109,12 +124,25 @@ public class BotListener implements EventListener {
 			Message msg) {
 		lang = lang.toLowerCase();
 		String serverLang = getServerLang(guild, channel);
+		boolean isGuild = false;
+		TextChannel channelT = null;
+		try {
+			channelT = PSS.jda.getTextChannelById(channel.getId());
+		} catch (Exception e) {
+			isGuild = false;
+		}
 
-		String logID = CSV.getCell(guild.getId(), "log_channel", "./res/server.csv");
-		if (logID.equals("NaN") || logID.isEmpty()) {
-			channel.sendMessage(CSV.getCell("logChannelNotAdded", serverLang, "./res/langs.csv").replace("[OWNER]",
-					guild.getOwner().getAsMention())).queue();
-			return;
+		if (channelT != null)
+			isGuild = true;
+
+		String logID = "";
+		if (isGuild) {
+			logID = CSV.getCell(guild.getId(), "log_channel", "./res/server.csv");
+			if (logID.equals("NaN") || logID.isEmpty()) {
+				channel.sendMessage(CSV.getCell("logChannelNotAdded", serverLang, "./res/langs.csv").replace("[OWNER]",
+						guild.getOwner().getAsMention())).queue();
+				return;
+			}
 		}
 
 		boolean cLD = Boolean.parseBoolean(CSV.getCell(guild.getId(), "capitalLetter", "./res/server.csv"));
@@ -126,15 +154,18 @@ public class BotListener implements EventListener {
 			Matcher matcher = capitalLetter.matcher(message);
 			if (matcher.find()) {
 				if (matcher.groupCount() == 1) {
-					EmbedBuilder embed = new EmbedBuilder();
-					embed.setTitle(CSV.getCell("capitalLetter_title", serverLang, "./res/langs.csv"));
-					embed.addField(msg.getAuthor().getName() + "#" + msg.getAuthor().getDiscriminator(), "__**"
-							+ CSV.getCell("capitalLetter_messageDef", serverLang, "./res/langs.csv") + "**__" + message,
-							false);
-					embed.setFooter(CSV.getCell("capitalLetter_userDef", serverLang, "./res/langs.csv") + "<@"
-							+ msg.getAuthor().getId() + ">");
-					embed.setColor(Color.RED);
-					guild.getTextChannelById(logID).sendMessage(embed.build()).queue();
+					if (isGuild) {
+						EmbedBuilder embed = new EmbedBuilder();
+						embed.setTitle(CSV.getCell("capitalLetter_title", serverLang, "./res/langs.csv"));
+						embed.addField("<@" + msg.getAuthor().getId() + ">",
+								"__**" + CSV.getCell("capitalLetter_messageDef", serverLang, "./res/langs.csv") + "**__"
+										+ message,
+								false);
+						embed.setFooter(CSV.getCell("capitalLetter_userDef", serverLang, "./res/langs.csv")
+								+ msg.getAuthor().getName() + "#" + msg.getAuthor().getDiscriminator());
+						embed.setColor(Color.RED);
+						guild.getTextChannelById(logID).sendMessage(embed.build()).queue();
+					}
 					msg.delete().queue();
 					channel.sendMessage(CSV.getCell("deletedCL", lang, "./res/langs.csv")).queue();
 					return;

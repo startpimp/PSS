@@ -12,21 +12,21 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 
 public class PSS implements Runnable {
-	private final JDA jda;
+	public static JDA jda = null;
 	private final CommandMap commandMap = new CommandMap(this);
 	private final Scanner scanner = new Scanner(System.in);
 
 	private boolean running;
 
 	public PSS() throws LoginException {
-		jda = new JDABuilder(AccountType.BOT).setToken("NjY1NTk4NDAxMjg2NTA0NDU4.XhoBVQ.zfVBpi6pnE2PMyyzQBBdzYqRZ3Y").setActivity(Activity.listening(CommandMap.tag + "help"))
+		PSS.jda = new JDABuilder(AccountType.BOT).setToken("NjY1NTk4NDAxMjg2NTA0NDU4.XhoBVQ.zfVBpi6pnE2PMyyzQBBdzYqRZ3Y").setActivity(Activity.listening(CommandMap.tag + "help"))
 				.build();
 		jda.addEventListener(new BotListener(commandMap));
 		System.out.println("[SYSTEM] PSS connected");
 	}
 	
 	public JDA getJda() {
-		return jda;
+		return PSS.jda;
 	}
 
 	public void setRunning(boolean running) {
@@ -42,7 +42,7 @@ public class PSS implements Runnable {
 		}
 		scanner.close();
 		System.out.println("[SYSTEM] Bot stopped");
-		jda.shutdown();
+		PSS.jda.shutdown();
 		System.exit(0);
 	}
 
