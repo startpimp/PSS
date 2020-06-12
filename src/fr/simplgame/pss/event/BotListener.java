@@ -10,11 +10,9 @@ import fr.simplgame.pss.PSS;
 import fr.simplgame.pss.command.CommandMap;
 import fr.simplgame.pss.util.CSV;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.entities.PrivateChannel;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.GenericEvent;
@@ -48,8 +46,6 @@ public class BotListener implements EventListener {
 
 	private void onMessage(MessageReceivedEvent mre) {
 
-		ChannelType type = null;
-
 		// If the user is PSS, returning to the top function.
 		if (mre.getAuthor().equals(mre.getJDA().getSelfUser()))
 			return;
@@ -60,16 +56,11 @@ public class BotListener implements EventListener {
 			if (commandMap.commandUser(mre.getAuthor(), message, mre.getMessage())) {
 				if (mre.getTextChannel() != null) {
 					mre.getMessage().delete().queue();
-					type = mre.getTextChannel().getType();
-				} else if (mre.getPrivateChannel() != null) {
-					mre.getMessage().delete().queue();
-					type = mre.getPrivateChannel().getType();
 				}
 			}
 		} else {
-			verifyMessageContent(mre.getMessage().getContentRaw(), getUserLang(mre.getAuthor(), type),
-					mre.getTextChannel(), mre.getGuild(), mre.getMessage());
-			mre.getMessage().getChannel().
+			verifyMessageContent(mre.getMessage().getContentRaw(), getUserLang(mre.getAuthor(), mre.getMessage().getChannel()),
+					mre.getMessage().getChannel(), mre.getGuild(), mre.getMessage());
 		}
 	}
 
@@ -80,7 +71,7 @@ public class BotListener implements EventListener {
 	 * @param channel
 	 * @return
 	 */
-	public static String getUserLang(User user, ChannelType channel) {
+	public static String getUserLang(User user, MessageChannel channel) {
 
 		String defaultMessage = "You've been added to our language database. To change your language, do : `"
 				+ CommandMap.tag + "lang [language]`. \n" + "To view all languages avaible, do `" + CommandMap.tag
@@ -94,7 +85,7 @@ public class BotListener implements EventListener {
 			// Adding user to user.csv
 			CSV.addLine(user.getId() + ";english;200;0;0;10", "./res/user.csv");
 
-			sendMessage(defaultMessage, channel);
+			channel.sendMessage(defaultMessage).queue();
 		}
 
 		return userLang.toLowerCase();
