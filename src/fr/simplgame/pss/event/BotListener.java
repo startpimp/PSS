@@ -59,8 +59,9 @@ public class BotListener implements EventListener {
 				}
 			}
 		} else {
-			verifyMessageContent(mre.getMessage().getContentRaw(), getUserLang(mre.getAuthor(), mre.getMessage().getChannel()),
-					mre.getMessage().getChannel(), mre.getGuild(), mre.getMessage());
+			verifyMessageContent(mre.getMessage().getContentRaw(),
+					getUserLang(mre.getAuthor(), mre.getMessage().getChannel()), mre.getMessage().getChannel(),
+					mre.getGuild(), mre.getMessage());
 		}
 	}
 
@@ -189,10 +190,39 @@ public class BotListener implements EventListener {
 				}
 			}
 
-			if (words.size() >= 1) {
-				for (String string : words) {
-					System.out.println(string);
+			if (lang != serverLang) {
+				for (String word : CSV.getColumn(serverLang, "./res/bannedWords.csv")) {
+					Pattern detector = Pattern.compile("(\\s+|)(" + word.toLowerCase() + ")(\\s+|\\.+|\\?+|!+|)");
+					Matcher matcher = detector.matcher(message.toLowerCase());
+
+					if (matcher.find()) {
+						words.add(matcher.group(2));
+					}
 				}
+			}
+
+			String foundWords = "";
+			if (words.size() >= 1) {
+				foundWords += words.get(0);
+				for (int i = 1; i < words.size() - 2; i++) {
+					foundWords += words.get(i) + CSV.getCell("comma_and", serverLang, "./res/langs.csv");
+				}
+				foundWords += words.get(words.size() - 1) + CSV.getCell("point", serverLang, "./res/langs.csv");
+			}
+			if (isGuild && words.size() >= 1) {
+				EmbedBuilder embed = new EmbedBuilder();
+				embed.setTitle(CSV.getCell("bannedWords_title", serverLang, "./res/langs.csv"));
+				if(lang == serverLang) {
+					embed.addField(CSV.getCell("bannedWords_langUsed", serverLang, "./res/langs.csv"), lang,
+							false);
+				} else {
+					embed.addField(CSV.getCell("bannedWords_langUsed", serverLang, "./res/langs.csv"), lang + CSV.getCell("and_word", serverLang, "./res/langs.csv") + serverLang,
+							false);
+				}
+				embed.setFooter(CSV.getCell("capitalLetter_userDef", serverLang, "./res/langs.csv")
+						+ msg.getAuthor().getName() + "#" + msg.getAuthor().getDiscriminator());
+				embed.setColor(Color.RED);
+				guild.getTextChannelById(logID).sendMessage(embed.build()).queue();
 			}
 		}
 
