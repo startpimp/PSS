@@ -9,14 +9,14 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * Fichier permettant la lecture des fichiers CSV sans aucune dificulté
+ * Fichier permettant la lecture des fichiers CSV sans aucune dificultï¿½
  * 
  * @author StartPimp47
  *
  */
 public class CSV {
 	/**
-	 * Séparateur logique de chaque données par ligne Par défaut, il est sur ' ; '.
+	 * Sï¿½parateur logique de chaque donnï¿½es par ligne Par dï¿½faut, il est sur ' ; '.
 	 */
 	public static String separator = ";";
 
@@ -25,7 +25,7 @@ public class CSV {
 	 * 
 	 * @param key  Nom de ligne (ID)
 	 * @param var  Nom de colonne
-	 * @param file Chemin vers le fichier ciblé
+	 * @param file Chemin vers le fichier ciblï¿½
 	 * @return Retourne le contenu de la cellule. Si inconnu, alors "NaN"
 	 */
 	public static String getCell(String key, String var, String file) {
@@ -57,11 +57,11 @@ public class CSV {
 	}
 
 	/**
-	 * Récupération d'un ligne entière
+	 * Rï¿½cupï¿½ration d'un ligne entiï¿½re
 	 * 
 	 * @param key  Nom de ligne (ID)
-	 * @param file Chemin vers le fichier ciblé
-	 * @return Retourne la ligne sous forme de String avec le séparateur. Si
+	 * @param file Chemin vers le fichier ciblï¿½
+	 * @return Retourne la ligne sous forme de String avec le sï¿½parateur. Si
 	 *         inconnu, alors "NaN"
 	 */
 	public static String getLine(String key, String file) {
@@ -85,10 +85,10 @@ public class CSV {
 	}
 
 	/**
-	 * Récupération d'un colonne entière
+	 * Rï¿½cupï¿½ration d'un colonne entiï¿½re
 	 * 
 	 * @param title Nom de colonne
-	 * @param file  Chemin vers le fichier ciblé
+	 * @param file  Chemin vers le fichier ciblï¿½
 	 * @return Retourne la colonne sous forme de List. Si inconnu, alors null
 	 */
 	public static List<String> getColumn(String title, String file) {
@@ -117,11 +117,11 @@ public class CSV {
 	}
 
 	/**
-	 * Récupération de l'ID de la cellule
+	 * Rï¿½cupï¿½ration de l'ID de la cellule
 	 * 
 	 * @param var  Nom de colonne
 	 * @param word Contenu de la cellule
-	 * @param file Chemin vers le fichier ciblé
+	 * @param file Chemin vers le fichier ciblÃ©
 	 * @return Retourne l'ID de la cellule. Si inconnu, alors "NaN"
 	 */
 	public static String getKey(String var, String word, String file) {
@@ -133,11 +133,15 @@ public class CSV {
 				String[] vars = line.split(separator);
 				if (column == -1) {
 					for (int i = 0; i < vars.length; i++) {
+						System.out.println(new String(vars[i].getBytes(), "UTF-8"));
+						System.out.println(var);
 						if (new String(vars[i].getBytes(), "UTF-8").equals(var))
 							column = i;
 					}
 				} else {
 					for (int i = 0; i < vars.length; i++) {
+						System.out.println(vars[i]);
+						System.out.println(word);
 						if (vars[i].equals(word)) {
 							sc.close();
 							return new String(vars[0].getBytes(), "UTF-8");
@@ -157,9 +161,9 @@ public class CSV {
 	/**
 	 * Ajouter une ligne au fichier
 	 * 
-	 * @param line Ligne entière sous forme de String. Chaque donnée devra être
-	 *             séparée par le séparateur principal
-	 * @param file chemin vers le fichier ciblé
+	 * @param line Ligne entiï¿½re sous forme de String. Chaque donnï¿½e devra ï¿½tre
+	 *             sï¿½parï¿½e par le sï¿½parateur principal
+	 * @param file chemin vers le fichier ciblï¿½
 	 */
 	public static void addLine(String line, String file) {
 		try (PrintWriter pw = new PrintWriter(new FileOutputStream(new File(file), true))) {
@@ -179,7 +183,7 @@ public class CSV {
 	 * @param key     Nom de ligne (ID)
 	 * @param var     Nom de colonne
 	 * @param content Nouveau contenu
-	 * @param file    Chemin vers le fichier ciblé
+	 * @param file    Chemin vers le fichier ciblï¿½
 	 */
 	public static void modifyCell(String key, String var, String content, String file) {
 

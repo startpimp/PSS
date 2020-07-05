@@ -27,9 +27,9 @@ bank_desc;Allows you to know how much money you have.;Permet de connaître l'arg
 bank_response;You have:\n[] [MONEY]Ŧ\n[SENTENCE];Vous avez :\n[] [MONEY]Ŧ\n[SENTENCE];持っているもの：\n[] [MONEY]Ŧ\n[SENTENCE]
 bank_response_positive;You don't lack anything.;Vous ne manquez de rien.;何も欠如しません。
 bank_response_negative;You're in debt.;Vous êtes endetté.;借金をしています。
-français_lang;French;Français;フランス語
-english_lang;English;Anglais;英語
-日本語_lang;Japanese;Japonais;日本語
+français_lang;french;Français;フランス語
+english_lang;english;Anglais;英語
+日本語_lang;japanese;Japonais;日本語
 français_people;French;Français;フランス人
 english_people;English;Anglais;英人
 日本語_people;Japanese;Japonais;日本人

@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 import fr.simplgame.pss.PSS;
 import fr.simplgame.pss.command.CommandMap;
 import fr.simplgame.pss.util.CSV;
+import fr.simplgame.pss.util.Loader;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Message;
@@ -26,6 +27,8 @@ import net.dv8tion.jda.api.hooks.EventListener;
  *
  */
 public class BotListener implements EventListener {
+	
+	private List<Loader> loaders = new ArrayList<>();
 
 	private final CommandMap commandMap;
 
@@ -36,6 +39,15 @@ public class BotListener implements EventListener {
 	 */
 	public BotListener(CommandMap commandMap) {
 		this.commandMap = commandMap;
+		
+		// Loading of all langages
+		String[] langs = CSV.getLine("id", "./res/langs.csv").split(";");
+
+		for (int i = 1; i < langs.length - 1; i++) {
+			Loader l = new Loader(langs[i]);
+			l.load();
+			loaders.add(l);
+		}
 	}
 
 	@Override
@@ -45,6 +57,13 @@ public class BotListener implements EventListener {
 	}
 
 	private void onMessage(MessageReceivedEvent mre) {
+		
+		Loader lang = null;
+		
+		for(Loader l : loaders) {
+			if(getUserLang(mre.getAuthor(), mre.getChannel()).equals(l.getLang()))
+				lang = l;
+		}
 
 		// If the user is PSS, returning to the top function.
 		if (mre.getAuthor().equals(mre.getJDA().getSelfUser()))
