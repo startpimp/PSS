@@ -23,7 +23,7 @@ Ceci permet à chaque utilisateur de pouvoir comprendre le bot dans sa langue na
 
 ### Majuscules
 La détection des majuscules se fait simplement. Les caractères non-alphabétiques sont comptés comme étant des majuscules, ainsi que les espaces et les sauts de lignes. Le reste, tel que les miniscules, les lettres Coréennes, etc. ne sont pas comptés.
-> ^([^a-z0-9あ-んア-ンㄱ-희.]+)$
+> ^([^a-z0-9あ-んア-ンㄱ-희\u2000-\u3300\ud000-\udfff\ud000-\udfff\ud000-\udfff.]+)$
 
 ### Mots bannis
 Les mots bannis font partie du langage de l'utilisateur et de ceux du serveur où il se trouve.

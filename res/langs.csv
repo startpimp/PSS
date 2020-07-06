@@ -14,7 +14,7 @@ dash; - ; - ;－
 comma_and;, ;, ;と
 and_word; and ; et ;と
 point;. ;. ;。
-help_type_other;Other;Autre;コマンド他
+help_type_other;Other;Autre;他のコマンド
 help_type_server;Server;Serveur;サーバー
 help_type_security;Security;Sécurité;セキュリティ
 getlang_desc;Allows you to know all the available languages.;Permet de connaître toutes les langues disponibles.;すべての利用可能な言語を知ります。

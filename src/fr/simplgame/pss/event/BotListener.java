@@ -140,6 +140,11 @@ public class BotListener implements EventListener {
 		Loader userLang = loader[0];
 		boolean isGuild = false;
 		TextChannel channelT = null;
+		msg.clearReactions().complete(mess -> {
+			
+		})
+		msg.clearReactions().complete();
+		message = msg.getContentRaw();
 		try {
 			channelT = PSS.jda.getTextChannelById(channel.getId());
 		} catch (Exception e) {
@@ -165,7 +170,8 @@ public class BotListener implements EventListener {
 		boolean lD = Boolean.parseBoolean(CSV.getCell(guild.getId(), "link", "./res/server.csv"));
 
 		if (cLD) {
-			Pattern capitalLetter = Pattern.compile("^([^a-z0-9あ-んア-ンㄱ-희.]+)$");
+			Pattern capitalLetter = Pattern
+					.compile("^([^a-z0-9あ-んア-ンㄱ-희.\\?]+)$");
 			Matcher matcher = capitalLetter.matcher(message);
 			if (matcher.find()) {
 				if (matcher.groupCount() == 1) {
@@ -211,7 +217,7 @@ public class BotListener implements EventListener {
 				}
 			}
 
-			if (userLang.getLang() != serverLang.getLang()) {
+			if (!userLang.getLang().equals(serverLang.getLang())) {
 				for (String word : CSV.getColumn(serverLang.getLang(), "./res/bannedWords.csv")) {
 					Pattern detector = Pattern.compile("(\\s+|)(" + word.toLowerCase() + ")(\\s+|\\.+|\\?+|!+|)");
 					Matcher matcher = detector.matcher(message.toLowerCase());

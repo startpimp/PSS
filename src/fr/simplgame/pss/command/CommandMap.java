@@ -115,8 +115,11 @@ public final class CommandMap {
 				objects[i] = bot.getJda();
 			else if (parameters[i].getType() == MessageChannel.class)
 				objects[i] = message.getChannel();
-			else if (parameters[i].getType() == Loader[].class)
+			else if (parameters[i].getType() == Loader[].class) {
+				lang[0].load();
+				lang[1].load();
 				objects[i] = lang;
+			}
 		}
 		simpleCommand.getMethod().invoke(simpleCommand.getObject(), objects);
 	}

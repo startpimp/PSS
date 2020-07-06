@@ -20,6 +20,7 @@ public class Loader {
 
 	public void load() {
 		String file = "./res/langs.csv";
+		lang.getVars().clear();
 
 		for (String word : CSV.getColumn(var, file)) {
 			lang.getVars().add(CSV.getKey(var, word, file) + "=" + word);
