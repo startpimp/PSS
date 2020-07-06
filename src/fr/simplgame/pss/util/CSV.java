@@ -133,15 +133,11 @@ public class CSV {
 				String[] vars = line.split(separator);
 				if (column == -1) {
 					for (int i = 0; i < vars.length; i++) {
-						System.out.println(new String(vars[i].getBytes(), "UTF-8"));
-						System.out.println(var);
 						if (new String(vars[i].getBytes(), "UTF-8").equals(var))
 							column = i;
 					}
 				} else {
 					for (int i = 0; i < vars.length; i++) {
-						System.out.println(vars[i]);
-						System.out.println(word);
 						if (vars[i].equals(word)) {
 							sc.close();
 							return new String(vars[0].getBytes(), "UTF-8");

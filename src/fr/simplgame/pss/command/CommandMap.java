@@ -11,6 +11,7 @@ import fr.simplgame.pss.command.Command.ExecutorType;
 import fr.simplgame.pss.command.main.CommandDefault;
 import fr.simplgame.pss.command.main.Economy;
 import fr.simplgame.pss.command.main.Language;
+import fr.simplgame.pss.util.Loader;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Message;
@@ -62,19 +63,19 @@ public final class CommandMap {
 			return;
 		}
 		try {
-			execute(((SimpleCommand) object[0]), command, (String[]) object[1], null);
+			execute(((SimpleCommand) object[0]), command, (String[]) object[1], null, null);
 		} catch (Exception exception) {
 			System.out.println("La methode " + ((SimpleCommand) object[0]).getMethod().getName()
 					+ " n'est pas correctement initialisee.");
 		}
 	}
 
-	public boolean commandUser(User user, String command, Message message) {
+	public boolean commandUser(User user, String command, Message message, Loader[] lang) {
 		Object[] object = getCommand(command);
 		if (object[0] == null || ((SimpleCommand) object[0]).getExecutorType() == ExecutorType.CONSOLE)
 			return false;
 		try {
-			execute(((SimpleCommand) object[0]), command, (String[]) object[1], message);
+			execute(((SimpleCommand) object[0]), command, (String[]) object[1], message, lang);
 		} catch (Exception exception) {
 			exception.printStackTrace();
 			System.out.println("La methode " + ((SimpleCommand) object[0]).getMethod().getName()
@@ -92,7 +93,7 @@ public final class CommandMap {
 		return new Object[] { simpleCommand, args };
 	}
 
-	private void execute(SimpleCommand simpleCommand, String command, String[] args, Message message) throws Exception {
+	private void execute(SimpleCommand simpleCommand, String command, String[] args, Message message, Loader[] lang) throws Exception {
 		Parameter[] parameters = simpleCommand.getMethod().getParameters();
 		Object[] objects = new Object[parameters.length];
 		for (int i = 0; i < parameters.length; i++) {
@@ -114,6 +115,8 @@ public final class CommandMap {
 				objects[i] = bot.getJda();
 			else if (parameters[i].getType() == MessageChannel.class)
 				objects[i] = message.getChannel();
+			else if (parameters[i].getType() == Loader[].class)
+				objects[i] = lang;
 		}
 		simpleCommand.getMethod().invoke(simpleCommand.getObject(), objects);
 	}

@@ -27,7 +27,7 @@ import net.dv8tion.jda.api.hooks.EventListener;
  *
  */
 public class BotListener implements EventListener {
-	
+
 	private List<Loader> loaders = new ArrayList<>();
 
 	private final CommandMap commandMap;
@@ -39,7 +39,7 @@ public class BotListener implements EventListener {
 	 */
 	public BotListener(CommandMap commandMap) {
 		this.commandMap = commandMap;
-		
+
 		// Loading of all langages
 		String[] langs = CSV.getLine("id", "./res/langs.csv").split(";");
 
@@ -57,12 +57,16 @@ public class BotListener implements EventListener {
 	}
 
 	private void onMessage(MessageReceivedEvent mre) {
-		
-		Loader lang = null;
-		
-		for(Loader l : loaders) {
-			if(getUserLang(mre.getAuthor(), mre.getChannel()).equals(l.getLang()))
-				lang = l;
+
+		Loader[] lang = new Loader[2];
+
+		for (Loader l : loaders) {
+			if (!mre.getAuthor().isBot()) {
+				if (getUserLang(mre.getAuthor(), mre.getChannel()).equals(l.getLang()))
+					lang[0] = l;
+			}
+			if (getServerLang(mre.getGuild(), mre.getChannel()).equals(l.getLang()))
+				lang[1] = l;
 		}
 
 		// If the user is PSS, returning to the top function.
@@ -72,15 +76,14 @@ public class BotListener implements EventListener {
 		String message = mre.getMessage().getContentRaw();
 		if (message.startsWith(commandMap.getTag())) {
 			message = message.replaceFirst(commandMap.getTag(), "");
-			if (commandMap.commandUser(mre.getAuthor(), message, mre.getMessage())) {
+			if (commandMap.commandUser(mre.getAuthor(), message, mre.getMessage(), lang)) {
 				if (mre.getTextChannel() != null) {
 					mre.getMessage().delete().queue();
 				}
 			}
 		} else {
-			verifyMessageContent(mre.getMessage().getContentRaw(),
-					getUserLang(mre.getAuthor(), mre.getMessage().getChannel()), mre.getMessage().getChannel(),
-					mre.getGuild(), mre.getMessage());
+			verifyMessageContent(mre.getMessage().getContentRaw(), lang, mre.getMessage().getChannel(), mre.getGuild(),
+					mre.getMessage());
 		}
 	}
 
@@ -131,10 +134,10 @@ public class BotListener implements EventListener {
 		return serverLang.toLowerCase();
 	}
 
-	public static void verifyMessageContent(String message, String lang, MessageChannel channel, Guild guild,
+	public static void verifyMessageContent(String message, Loader[] loader, MessageChannel channel, Guild guild,
 			Message msg) {
-		lang = lang.toLowerCase();
-		String serverLang = getServerLang(guild, channel);
+		Loader serverLang = loader[1];
+		Loader userLang = loader[0];
 		boolean isGuild = false;
 		TextChannel channelT = null;
 		try {
@@ -150,8 +153,9 @@ public class BotListener implements EventListener {
 		if (isGuild) {
 			logID = CSV.getCell(guild.getId(), "log_channel", "./res/server.csv");
 			if (logID.equals("NaN") || logID.isEmpty()) {
-				channel.sendMessage(CSV.getCell("logChannelNotAdded", serverLang, "./res/langs.csv").replace("[OWNER]",
-						guild.getOwner().getAsMention())).queue();
+				channel.sendMessage(
+						serverLang.lang.get("logChannelNotAdded").replace("[OWNER]", guild.getOwner().getAsMention()))
+						.queue();
 				return;
 			}
 		}
@@ -167,18 +171,16 @@ public class BotListener implements EventListener {
 				if (matcher.groupCount() == 1) {
 					if (isGuild) {
 						EmbedBuilder embed = new EmbedBuilder();
-						embed.setTitle(CSV.getCell("capitalLetter_title", serverLang, "./res/langs.csv"));
+						embed.setTitle(serverLang.lang.get("capitalLetter_title"));
 						embed.addField("<@" + msg.getAuthor().getId() + ">",
-								"__**" + CSV.getCell("capitalLetter_messageDef", serverLang, "./res/langs.csv") + "**__"
-										+ message,
-								false);
-						embed.setFooter(CSV.getCell("capitalLetter_userDef", serverLang, "./res/langs.csv")
-								+ msg.getAuthor().getName() + "#" + msg.getAuthor().getDiscriminator());
+								"__**" + serverLang.lang.get("capitalLetter_messageDef") + "**__" + message, false);
+						embed.setFooter(serverLang.lang.get("userDef") + msg.getAuthor().getName() + "#"
+								+ msg.getAuthor().getDiscriminator());
 						embed.setColor(Color.RED);
 						guild.getTextChannelById(logID).sendMessage(embed.build()).queue();
 					}
 					msg.delete().queue();
-					channel.sendMessage(CSV.getCell("deletedCL", lang, "./res/langs.csv")).queue();
+					channel.sendMessage(userLang.lang.get("deletedCL")).queue();
 					return;
 				}
 			}
@@ -200,7 +202,7 @@ public class BotListener implements EventListener {
 
 		if (bWD) {
 			List<String> words = new ArrayList<>();
-			for (String word : CSV.getColumn(lang, "./res/bannedWords.csv")) {
+			for (String word : CSV.getColumn(userLang.getLang(), "./res/bannedWords.csv")) {
 				Pattern detector = Pattern.compile("(\\s+|)(" + word.toLowerCase() + ")(\\s+|\\.+|\\?+|!+|)");
 				Matcher matcher = detector.matcher(message.toLowerCase());
 
@@ -209,8 +211,8 @@ public class BotListener implements EventListener {
 				}
 			}
 
-			if (lang != serverLang) {
-				for (String word : CSV.getColumn(serverLang, "./res/bannedWords.csv")) {
+			if (userLang.getLang() != serverLang.getLang()) {
+				for (String word : CSV.getColumn(serverLang.getLang(), "./res/bannedWords.csv")) {
 					Pattern detector = Pattern.compile("(\\s+|)(" + word.toLowerCase() + ")(\\s+|\\.+|\\?+|!+|)");
 					Matcher matcher = detector.matcher(message.toLowerCase());
 
@@ -224,22 +226,25 @@ public class BotListener implements EventListener {
 			if (words.size() >= 1) {
 				foundWords += words.get(0);
 				for (int i = 1; i < words.size() - 2; i++) {
-					foundWords += words.get(i) + CSV.getCell("comma_and", serverLang, "./res/langs.csv");
+					foundWords += serverLang.lang.get("comma_and") + words.get(i);
 				}
-				foundWords += words.get(words.size() - 1) + CSV.getCell("point", serverLang, "./res/langs.csv");
+				foundWords += serverLang.lang.get("comma_and") + words.get(words.size() - 1)
+						+ serverLang.lang.get("point");
 			}
 			if (isGuild && words.size() >= 1) {
 				EmbedBuilder embed = new EmbedBuilder();
-				embed.setTitle(CSV.getCell("bannedWords_title", serverLang, "./res/langs.csv"));
-				if(lang == serverLang) {
-					embed.addField(CSV.getCell("bannedWords_langUsed", serverLang, "./res/langs.csv"), lang,
-							false);
+				embed.setTitle(serverLang.lang.get("bannedWords_title"));
+				if (userLang.getLang() == serverLang.getLang()) {
+					embed.addField(serverLang.lang.get("bannedWords_langUsed"), userLang.getLang(), false);
 				} else {
-					embed.addField(CSV.getCell("bannedWords_langUsed", serverLang, "./res/langs.csv"), lang + CSV.getCell("and_word", serverLang, "./res/langs.csv") + serverLang,
+					embed.addField(serverLang.lang.get("bannedWords_langUsed"),
+							serverLang.lang.get(userLang.getLang() + "_lang") + serverLang.lang.get("and_word")
+									+ serverLang.getLang(),
 							false);
 				}
-				embed.setFooter(CSV.getCell("capitalLetter_userDef", serverLang, "./res/langs.csv")
-						+ msg.getAuthor().getName() + "#" + msg.getAuthor().getDiscriminator());
+				embed.addField(serverLang.lang.get("foundWord"), foundWords, false);
+				embed.setFooter(serverLang.lang.get("userDef") + msg.getAuthor().getName() + "#"
+						+ msg.getAuthor().getDiscriminator());
 				embed.setColor(Color.RED);
 				guild.getTextChannelById(logID).sendMessage(embed.build()).queue();
 			}
