@@ -11,6 +11,10 @@ public class Loader {
 		var = language;
 		load();
 	}
+	
+	public Loader() {
+		load();
+	}
 
 	public String getLang() {
 		return var;

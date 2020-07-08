@@ -9,8 +9,7 @@ import java.util.Map;
 import fr.simplgame.pss.PSS;
 import fr.simplgame.pss.command.Command.ExecutorType;
 import fr.simplgame.pss.command.main.CommandDefault;
-import fr.simplgame.pss.command.main.Economy;
-import fr.simplgame.pss.command.main.Language;
+import fr.simplgame.pss.server.us.LanguageManager;
 import fr.simplgame.pss.util.Loader;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
@@ -27,8 +26,8 @@ public final class CommandMap {
 
 	public CommandMap(PSS bot) {
 		this.bot = bot;
-		
-		registerCommands(new CommandDefault(bot, this), new Language(), new Economy());
+
+		registerCommands(new CommandDefault(bot), new LanguageManager());
 	}
 
 	public String getTag() {
@@ -93,7 +92,8 @@ public final class CommandMap {
 		return new Object[] { simpleCommand, args };
 	}
 
-	private void execute(SimpleCommand simpleCommand, String command, String[] args, Message message, Loader[] lang) throws Exception {
+	private void execute(SimpleCommand simpleCommand, String command, String[] args, Message message, Loader[] lang)
+			throws Exception {
 		Parameter[] parameters = simpleCommand.getMethod().getParameters();
 		Object[] objects = new Object[parameters.length];
 		for (int i = 0; i < parameters.length; i++) {
