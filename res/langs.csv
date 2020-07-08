@@ -1,6 +1,6 @@
 id;english;english_us;français;日本語;한국어
 server.us.lm.L1;The chosen language is already yours.;The chosen language is already yours.;La langue choisie est déjà la vôtre.;選ばれた言語は、すでに[NAME]のものです。;선택한 언어는 이미 귀하의 언어입니다.
-server.us.lm.L2;The language has been changed!;The language has been changed!;La langue a été modifiée !;言語が変更されています！;언어가 바꾸었다.
+server.us.lm.L2;The language has been changed!;The language has been changed!;La langue a été modifiée !;言語が変更されています！;언어가 바꾸었다!
 server.us.lm.L3;The given language doesn’t exist.;The given language doesn’t exist.;La langue donnée n’existe pas.;与えられた言語は存在しません。;나는 존재하지 않다.
 general.mark.dot;. ;. ;. ;。;. 
 general.mark.comma;, ;, ;, ;、;, 
@@ -16,7 +16,7 @@ general.word.english;english;english;anglais;英語;영어
 general.word.english_us;American english;American english;anglais américain;アメリカ英語;미국 영어
 general.word.français;french;french;français;フランス語;프랑스어
 general.word.日本語;japanese;japanese;japonais;日本語;일어 
-general.word.한극어;korean;korean;coréen;韓国語;한국어 
+general.word.한국어;korean;korean;coréen;韓国語;한국어 
 general.word.NaN;unknown;unknown;inconnue;未知です;미지 
 server.us.um.L6;Account created at;Account created at;Compte créé le;アカウントが作成された日付です;계정이 창조했다 날짜 입니다
 server.us.um.L7;The user is also: ;The user is also:;L’utilisateur est aussi : ;ユーザーのも：;사용자는 또한 : 

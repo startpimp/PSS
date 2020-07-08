@@ -57,11 +57,11 @@ public class LanguageManager {
 
 		String[] langs = CSV.getLine("id", "./res/langs.csv").split(";");
 		String message = loader[0].lang.get("server.us.lm.Ls1");
-		message += langs[1];
+		message += "`" + langs[1] + "`";
 		for (int i = 2; i < langs.length - 1; i++) {
-			message += loader[0].lang.get("general.mark.comma") + langs[i];
+			message += loader[0].lang.get("general.mark.comma") + "`" + langs[i] + "`";
 		}
-		message += loader[0].lang.get("general.word.and") + langs[langs.length - 1]
+		message += loader[0].lang.get("general.word.and") + "`" + langs[langs.length - 1] + "`"
 				+ loader[0].lang.get("general.mark.dot");
 
 		channel.sendMessage(message).queue();

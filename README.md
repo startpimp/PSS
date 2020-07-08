@@ -5,5 +5,5 @@ Ce bot Discord est développé par StartPimp47 et DeepDev404. Il a pour projet d
 Refonte entière du bot. Version bêta acquise.
 
 **Système utilisateur**
-  * Langue utilisateur et serveur
+  * Langue utilisateur
   * Information utilisateur

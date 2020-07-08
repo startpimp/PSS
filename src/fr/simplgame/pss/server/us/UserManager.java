@@ -37,7 +37,6 @@ public class UserManager {
 
 		embed.addField(loader.lang.get("server.us.um.L4"), member.getId(), true);
 
-		System.out.println(CSV.getCell(member.getId(), "language", "./res/user.csv"));
 		embed.addField(loader.lang.get("server.us.um.L5"),
 				loader.lang
 						.get("general.word." + CSV.getCell(member.getId(), "language", "./res/user.csv").toLowerCase()),
