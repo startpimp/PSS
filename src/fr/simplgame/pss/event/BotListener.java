@@ -6,6 +6,7 @@ import java.util.List;
 import fr.simplgame.pss.command.CommandMap;
 import fr.simplgame.pss.util.CSV;
 import fr.simplgame.pss.util.Loader;
+import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.events.GenericEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.EventListener;
@@ -50,7 +51,9 @@ public class BotListener implements EventListener {
 
 		Loader[] lang = new Loader[2];
 		String userLanguage = CSV.getCell(mre.getAuthor().getId(), "language", "./res/user.csv");
-		String serverLanguage = CSV.getCell(mre.getGuild().getId(), "language", "./res/server.csv");
+		String serverLanguage = "NaN";
+		if (mre.getChannel().getType() == ChannelType.TEXT)
+			serverLanguage = CSV.getCell(mre.getGuild().getId(), "language", "./res/server.csv");
 		if (userLanguage.equals("NaN"))
 			lang[0] = new Loader();
 		else

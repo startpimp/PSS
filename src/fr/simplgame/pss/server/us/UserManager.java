@@ -16,7 +16,7 @@ public class UserManager {
 
 	@Command(name = "userinfo", type = ExecutorType.USER)
 	public void user(Member member, TextChannel channel, Loader[] loader, Message message) {
-		
+
 		EmbedBuilder embed = new EmbedBuilder();
 		embed.setTitle(loader[0].lang.get("server.us.um.L1"));
 		embed.setColor(Color.decode("#ed61ce"));
@@ -26,11 +26,11 @@ public class UserManager {
 			sendInformationEmbed(mm, channel, loader[0], embed);
 		} else
 			sendInformationEmbed(member, channel, loader[0], embed);
-		
+
 	}
 
 	private void sendInformationEmbed(Member member, TextChannel channel, Loader loader, EmbedBuilder embed) {
-		
+
 		embed.setThumbnail(member.getUser().getAvatarUrl());
 
 		if (member.getNickname() != null && !member.getUser().getName().equals(member.getNickname())) {
@@ -45,10 +45,35 @@ public class UserManager {
 						.get("general.word." + CSV.getCell(member.getId(), "language", "./res/user.csv").toLowerCase()),
 				true);
 
-		OffsetDateTime date = member.getUser().getTimeCreated();
-		String dateMsg = loader.lang.get("general.form.date").replace("[DAY]", date.getDayOfMonth() + "")
-				.replace("[MONTH]", date.getMonth().getValue() + "").replace("[YEAR]", date.getYear() + "");
+		OffsetDateTime createDate = member.getUser().getTimeCreated();
+		int hour = createDate.getHour();
+
+		String timeset = "";
+		if (loader.lang.get("general.form.date").contains("[TIMESET]") && hour > 12) {
+			hour = hour - 12;
+			timeset = loader.lang.get("general.word.pm");
+		} else if (loader.lang.get("general.form.date").contains("[TIMESET]"))
+			timeset = loader.lang.get("general.word.am");
+
+		String dateMsg = loader.lang.get("general.form.date").replace("[DAY]", createDate.getDayOfMonth() + "")
+				.replace("[MONTH]", createDate.getMonth().getValue() + "").replace("[YEAR]", createDate.getYear() + "")
+				.replace("[HOUR]", hour + "").replace("[MINUTES]", createDate.getMinute() + "")
+				.replace("[TIMESET]", timeset);
 		embed.addField(loader.lang.get("server.us.um.L6"), dateMsg, true);
+
+		OffsetDateTime joinDate = member.getTimeJoined();
+		hour = joinDate.getHour();
+		if (loader.lang.get("general.form.date").contains("[TIMESET]") && hour > 12) {
+			hour = hour - 12;
+			timeset = loader.lang.get("general.word.pm");
+		} else if (loader.lang.get("general.form.date").contains("[TIMESET]"))
+			timeset = loader.lang.get("general.word.am");
+
+		dateMsg = loader.lang.get("general.form.date").replace("[DAY]", joinDate.getDayOfMonth() + "")
+				.replace("[MONTH]", joinDate.getMonth().getValue() + "").replace("[YEAR]", joinDate.getYear() + "")
+				.replace("[HOUR]", hour + "").replace("[MINUTES]", joinDate.getMinute() + "")
+				.replace("[TIMESET]", timeset);
+		embed.addField(loader.lang.get("server.us.um.L8"), dateMsg, true);
 
 		channel.sendMessage(embed.build()).queue();
 
@@ -62,7 +87,7 @@ public class UserManager {
 				message += "\n - " + loader.lang.get("general.word.fake");
 
 			channel.sendMessage(message).queue();
-			
+
 		}
 	}
 

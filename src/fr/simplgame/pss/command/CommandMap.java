@@ -29,7 +29,7 @@ public final class CommandMap {
 	public CommandMap(PSS bot) {
 		this.bot = bot;
 
-		registerCommands(new CommandDefault(bot), new LanguageManager(), new UserManager());
+		registerCommands(new CommandDefault(bot, this), new LanguageManager(), new UserManager());
 	}
 
 	public String getTag() {

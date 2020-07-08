@@ -1,24 +1,37 @@
-id;english;english_us;français;日本語;한국어
-server.us.lm.L1;The chosen language is already yours.;The chosen language is already yours.;La langue choisie est déjà la vôtre.;選ばれた言語は、すでに[NAME]のものです。;선택한 언어는 이미 귀하의 언어입니다.
-server.us.lm.L2;The language has been changed!;The language has been changed!;La langue a été modifiée !;言語が変更されています！;언어가 바꾸었다!
-server.us.lm.L3;The given language doesn’t exist.;The given language doesn’t exist.;La langue donnée n’existe pas.;与えられた言語は存在しません。;나는 존재하지 않다.
-general.mark.dot;. ;. ;. ;。;. 
-general.mark.comma;, ;, ;, ;、;, 
-general.word.and; and ; and ; et ;と; 과 
-server.us.lm.Ls1;Available languages: ;Available languages: ;Langues disponibles : ;利用可能な言語：;사용 가능한 언어 : 
-general.form.date;[DAY]/[MONTH]/[YEAR];[MONTH]/[DAY]/[YEAR];[DAY]/[MONTH]/[YEAR];[YEAR]年[MONTH]月[DAY]日;[YEAR]년 [MONTH]월 [DAY]일
-server.us.um.L1;User information;User information;Information d’utilisateur;ユーザーの情報;사용자의 정보
-server.us.um.L2;Name on the server;Name on the server;Nom sur le serveur;サーバーにユーザーの名;서버위 사용자의 이름
-server.us.um.L3;Global name;Global name;Nom général;ユーザーのグローバル名;사용자의 글로벌 이름
-server.us.um.L4;ID;ID;Identifiant;イド;아이디
-server.us.um.L5;Used language;Used language;Langue utilisée;使用言語;사용 언어
-general.word.english;english;english;anglais;英語;영어 
-general.word.english_us;American english;American english;anglais américain;アメリカ英語;미국 영어
-general.word.français;french;french;français;フランス語;프랑스어
-general.word.日本語;japanese;japanese;japonais;日本語;일어 
-general.word.한국어;korean;korean;coréen;韓国語;한국어 
-general.word.nan;unknown;unknown;inconnue;未知です;미지 
-server.us.um.L6;Account created at;Account created at;Compte créé le;アカウントが作成された日付です;계정이 창조했다 날짜 입니다
-server.us.um.L7;The user is also: ;The user is also:;L’utilisateur est aussi : ;ユーザーのも：;사용자는 또한 : 
-general.word.robot;Robot;Robot;Robot;ロボット;로봇
-general.word.fake;Fake;Fake;Faux;偽アカウント;가짜
+id;english;english_us;français;日本語
+server.us.lm.L1;The chosen language is already yours.;The chosen language is already yours.;La langue choisie est déjà la vôtre.;選ばれた言語は、すでに[NAME]のものです。
+server.us.lm.L2;The language has been changed!;The language has been changed!;La langue a été modifiée !;言語が変更されています！
+server.us.lm.L3;The given language doesn’t exist.;The given language doesn’t exist.;La langue donnée n’existe pas.;与えられた言語は存在しません。
+general.mark.dot;. ;. ;. ;。
+general.mark.comma;, ;, ;, ;、
+general.word.and; and ; and ; et ;と
+server.us.lm.Ls1;Available languages: ;Available languages: ;Langues disponibles : ;利用可能な言語：
+general.form.date;[DAY]/[MONTH]/[YEAR] at [HOUR]:[MINUTES] [TIMESET];[MONTH]/[DAY]/[YEAR]  at [HOUR]:[MINUTES] [TIMESET];[DAY]/[MONTH]/[YEAR] à [HOUR]h[MINUTES];[YEAR]年[MONTH]月[DAY]日の[HOUR]時[MINUTES]分
+server.us.um.L1;User information;User information;Information d’utilisateur;ユーザーの情報
+server.us.um.L2;Name on the server;Name on the server;Nom sur le serveur;サーバーにユーザーの名
+server.us.um.L3;Global name;Global name;Nom général;ユーザーのグローバル名
+server.us.um.L4;ID;ID;Identifiant;イド
+server.us.um.L5;Used language;Used language;Langue utilisée;使用言語
+general.word.english;english;english;anglais;英語
+general.word.english_us;American english;American english;anglais américain;アメリカ英語
+general.word.français;french;french;français;フランス語
+general.word.日本語;japanese;japanese;japonais;日本語
+general.word.nan;unknown;unknown;inconnue;未知です
+server.us.um.L6;Account created at;Account created at;Compte créé le;アカウントが作成された日付です
+server.us.um.L7;The user is also: ;The user is also:;L’utilisateur est aussi : ;ユーザーのも：
+general.word.robot;Robot;Robot;Robot;ロボット
+general.word.fake;Fake;Fake;Faux;偽アカウント
+general.word.pm;pm;pm;;
+general.word.am;am;am;;
+server.us.um.L8;Server joined at;Server joined at;Serveur rejoint le;サーバーを参加された日付です
+command.help.title;List of commands;List of commands;Liste des commandes;コマンドのリスト
+command.help.desc;Displays all commands.;Displays all commands.;Permet d’afficher la totalité des commandes.;すべてのコマンドを表示します。
+command.help.field1;All commands;All commands;Toutes les commandes;すべてのコマンド
+general.mark.double_dot;: ;: ; : ;：
+command.help.required;() : required\n[] : not required;() : required\n[] : not required;() : obligatoire\n[] : pas obligatoire;（）：所要の\n［］：所要じゃない
+command.help.field2;Useful;Useful;Utile;使用な
+command.langs.desc;Allows you to know all the available languages.;Allows you to know all the available languages.;Permet de connaître toutes les langues disponibles.;利用可能なすべての言語をしることができます。
+command.setlang.desc;Allows you to change the language in which P.S.S speaks to you. The `language` must be written in its original language.;Allows you to change the language in which P.S.S speaks to you. The `language` must be written in its original language.;Vous permet de changer la langue dans laquelle P.S.S vous parle. La `langue` doit être écrite dans sa langue d'origine.;P.S.Sが話しかけてくる言語を変更することができます。`言語`は元の言語で書かれていなければならない。
+command.setlang.syntax; (language); (language); (langue);（言語）
+command.userinfo.desc;Allows you to display certain information about yourself or a user. The targeted user must be mentioned to see his information.;Allows you to display certain information about yourself or a user. The targeted user must be mentioned to see his information.;Vous permet d'afficher certaines informations vous concernant ou concernant un utilisateur. L'utilisateur ciblé doit être mentionné pour voir ses informations.;自分自身やユーザーに関する特定の情報を表示することができます。対象となるユーザーの情報を見るためには、対象となるユーザーを記載する必要があります。
+command.userinfo.syntax; [user]; [user]; [utilisateur];［ユーザー］
