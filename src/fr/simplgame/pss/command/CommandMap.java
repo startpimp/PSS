@@ -14,6 +14,7 @@ import fr.simplgame.pss.server.us.UserManager;
 import fr.simplgame.pss.util.Loader;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.PrivateChannel;
@@ -121,6 +122,8 @@ public final class CommandMap {
 				lang[1].load();
 				objects[i] = lang;
 			}
+			else if (parameters[i].getType() == Member.class)
+				objects[i] = message.getMember();
 		}
 		simpleCommand.getMethod().invoke(simpleCommand.getObject(), objects);
 	}

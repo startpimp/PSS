@@ -1,8 +1,24 @@
-id;english;français;日本語;한극어
-server.us.lm.L1;The chosen language is already yours.;La langue choisie est déjà la vôtre.;選ばれた言語は、すでに[NAME]のものです。;선택한 언어는 이미 귀하의 언어입니다.
-server.us.lm.L2;The language has been changed!;La langue a été modifiée !;言語が変更されています！;언어가 바꾸었다.
-server.us.lm.L3;The given language doesn’t exist.;La langue donnée n’existe pas.;与えられた言語は存在しません。;나는 존재하지 않다.
-general.mark.dot;. ;. ;。;. 
-general.mark.comma;, ;, ;、;, 
-general.word.and; and ; et ;と; 과 
-server.us.lm.Ls1;Available languages: ;Langues disponibles : ;利用可能な言語：;사용 가능한 언어 : 
+id;english;english_us;français;日本語;한국어
+server.us.lm.L1;The chosen language is already yours.;The chosen language is already yours.;La langue choisie est déjà la vôtre.;選ばれた言語は、すでに[NAME]のものです。;선택한 언어는 이미 귀하의 언어입니다.
+server.us.lm.L2;The language has been changed!;The language has been changed!;La langue a été modifiée !;言語が変更されています！;언어가 바꾸었다.
+server.us.lm.L3;The given language doesn’t exist.;The given language doesn’t exist.;La langue donnée n’existe pas.;与えられた言語は存在しません。;나는 존재하지 않다.
+general.mark.dot;. ;. ;. ;。;. 
+general.mark.comma;, ;, ;, ;、;, 
+general.word.and; and ; and ; et ;と; 과 
+server.us.lm.Ls1;Available languages: ;Available languages: ;Langues disponibles : ;利用可能な言語：;사용 가능한 언어 : 
+general.form.date;[DAY]/[MONTH]/[YEAR];[MONTH]/[DAY]/[YEAR];[DAY]/[MONTH]/[YEAR];[YEAR]年[MONTH]月[DAY]日;[YEAR]년 [MONTH]월 [DAY]일
+server.us.um.L1;User information;User information;Information d’utilisateur;ユーザーの情報;사용자의 정보
+server.us.um.L2;Name on the server;Name on the server;Nom sur le serveur;サーバーにユーザーの名;서버위 사용자의 이름
+server.us.um.L3;Global name;Global name;Nom général;ユーザーのグローバル名;사용자의 글로벌 이름
+server.us.um.L4;ID;ID;Identifiant;イド;아이디
+server.us.um.L5;Used language;Used language;Langue utilisée;使用言語;사용 언어
+general.word.english;english;english;anglais;英語;영어 
+general.word.english_us;American english;American english;anglais américain;アメリカ英語;미국 영어
+general.word.français;french;french;français;フランス語;프랑스어
+general.word.日本語;japanese;japanese;japonais;日本語;일어 
+general.word.한극어;korean;korean;coréen;韓国語;한국어 
+general.word.NaN;unknown;unknown;inconnue;未知です;미지 
+server.us.um.L6;Account created at;Account created at;Compte créé le;アカウントが作成された日付です;계정이 창조했다 날짜 입니다
+server.us.um.L7;The user is also: ;The user is also:;L’utilisateur est aussi : ;ユーザーのも：;사용자는 또한 : 
+general.word.robot;Robot;Robot;Robot;ロボット;로봇
+general.word.fake;Fake;Fake;Faux;偽アカウント;가짜
