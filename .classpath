@@ -4,5 +4,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Discord 4.1.0"/>
 	<classpathentry kind="lib" path="C:/Users/Megaport/Documents/LIBRARIES/Discord JDA/JDA 4.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Megaport/Downloads/jython-standalone-2.7.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
