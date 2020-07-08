@@ -17,7 +17,7 @@ general.word.english_us;American english;American english;anglais américain;ア
 general.word.français;french;french;français;フランス語;프랑스어
 general.word.日本語;japanese;japanese;japonais;日本語;일어 
 general.word.한국어;korean;korean;coréen;韓国語;한국어 
-general.word.NaN;unknown;unknown;inconnue;未知です;미지 
+general.word.nan;unknown;unknown;inconnue;未知です;미지 
 server.us.um.L6;Account created at;Account created at;Compte créé le;アカウントが作成された日付です;계정이 창조했다 날짜 입니다
 server.us.um.L7;The user is also: ;The user is also:;L’utilisateur est aussi : ;ユーザーのも：;사용자는 또한 : 
 general.word.robot;Robot;Robot;Robot;ロボット;로봇

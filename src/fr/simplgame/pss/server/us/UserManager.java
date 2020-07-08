@@ -16,6 +16,7 @@ public class UserManager {
 
 	@Command(name = "userinfo", type = ExecutorType.USER)
 	public void user(Member member, TextChannel channel, Loader[] loader, Message message) {
+		
 		EmbedBuilder embed = new EmbedBuilder();
 		embed.setTitle(loader[0].lang.get("server.us.um.L1"));
 		embed.setColor(Color.decode("#ed61ce"));
@@ -25,9 +26,11 @@ public class UserManager {
 			sendInformationEmbed(mm, channel, loader[0], embed);
 		} else
 			sendInformationEmbed(member, channel, loader[0], embed);
+		
 	}
 
 	private void sendInformationEmbed(Member member, TextChannel channel, Loader loader, EmbedBuilder embed) {
+		
 		embed.setThumbnail(member.getUser().getAvatarUrl());
 
 		if (member.getNickname() != null && !member.getUser().getName().equals(member.getNickname())) {
@@ -59,6 +62,7 @@ public class UserManager {
 				message += "\n - " + loader.lang.get("general.word.fake");
 
 			channel.sendMessage(message).queue();
+			
 		}
 	}
 
