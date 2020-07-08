@@ -10,6 +10,7 @@ import fr.simplgame.pss.PSS;
 import fr.simplgame.pss.command.Command.ExecutorType;
 import fr.simplgame.pss.command.main.CommandDefault;
 import fr.simplgame.pss.server.us.LanguageManager;
+import fr.simplgame.pss.server.us.UserManager;
 import fr.simplgame.pss.util.Loader;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
@@ -27,7 +28,7 @@ public final class CommandMap {
 	public CommandMap(PSS bot) {
 		this.bot = bot;
 
-		registerCommands(new CommandDefault(bot), new LanguageManager());
+		registerCommands(new CommandDefault(bot), new LanguageManager(), new UserManager());
 	}
 
 	public String getTag() {
