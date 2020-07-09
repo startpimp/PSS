@@ -80,7 +80,7 @@ public class BotListener implements EventListener {
 				return;
 			message = message.replaceFirst(commandMap.getTag(), "");
 			if (commandMap.commandUser(mre.getAuthor(), message, mre.getMessage(), lang)) {
-				if (mre.getTextChannel().getType() == ChannelType.TEXT)
+				if (mre.getChannel().getType() == ChannelType.TEXT)
 					mre.getMessage().delete().queue();
 			}
 		}
