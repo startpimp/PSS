@@ -35,19 +35,18 @@ public class CommandDefault {
 		EmbedBuilder embed = new EmbedBuilder();
 		embed.setTitle(loader[0].lang.get("command.help.title"));
 		embed.setColor(Color.decode("#ed61ce"));
+		embed.setDescription(loader[0].lang.get("command.help.field1"));
 
-		String commands = "";
 		for (SimpleCommand command : cm.getCommands()) {
 			if (command.getExecutorType() != ExecutorType.CONSOLE) {
 				String syntax = loader[0].lang.get("command." + command.getName() + ".syntax");
 				if (syntax.equals("NaN"))
 					syntax = "";
-				commands += "**" + command.getName() + syntax + loader[0].lang.get("general.mark.double_dot") + "**\n"
-						+ loader[0].lang.get("command." + command.getName() + ".desc") + "\n";
+				embed.addField(command.getName() + syntax, loader[0].lang.get("command." + command.getName() + ".desc"),
+						true);
 			}
 		}
 
-		embed.addField(loader[0].lang.get("command.help.field1"), commands, false);
 		embed.addField(loader[0].lang.get("command.help.field2"),
 				loader[0].lang.get("command.help.required").replace("\\n", "\n"), false);
 
@@ -61,12 +60,8 @@ public class CommandDefault {
 		EmbedBuilder embed = new EmbedBuilder();
 		embed.setTitle(loader[0].lang.get("command.ping.title"));
 		embed.setColor(Color.decode("#ed61ce"));
-
-		embed.addField("",
-				loader[0].lang.get("command.ping.field").replace("[PING]", pss.getJda().getGatewayPing() + "")
-						.replace("[PING2]", user.getJDA().getGatewayPing() + "").replace("\\n", "\n"),
-				false);
-
+		embed.setDescription(loader[0].lang.get("command.ping.field").replace("[PING]",
+				"**" + pss.getJda().getGatewayPing() + "**"));
 		channel.sendMessage(embed.build()).queue();
 	}
 

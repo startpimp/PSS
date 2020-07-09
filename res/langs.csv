@@ -36,4 +36,5 @@ command.setlang.syntax; (language); (language); (langue);（言語）
 command.userinfo.desc;Allows you to display certain information about yourself or a user. The targeted user must be mentioned to see his information.;Allows you to display certain information about yourself or a user. The targeted user must be mentioned to see his information.;Vous permet d'afficher certaines informations vous concernant ou concernant un utilisateur. L'utilisateur ciblé doit être mentionné pour voir ses informations.;自分自身やユーザーに関する特定の情報を表示することができます。対象となるユーザーの情報を見るためには、対象となるユーザーを記載する必要があります。
 command.userinfo.syntax; [user]; [user]; [utilisateur];［ユーザー］
 command.ping.title;Response time;Response time;Temps de réponse;応答時間 
-command.ping.field;Your response time: [PING]ms.\nP.S.S’s response time: [PING2]ms.;Your response time: [PING]ms.\nP.S.S’s response time: [PING2]ms.;Ton temps de réponse : [PING]ms.\nLe temps de réponse de P.S.S: [PING2]ms.;あなたの応答時間：[PING]ミリ秒。\nP.S.Sの応答時間：[PING2]ミリ秒。
+command.ping.field;P.S.S’s response time: [PING]ms.;P.S.S’s response time: [PING]ms.;Le temps de réponse de P.S.S : [PING]ms.;P.S.Sの応答時間：[PING]ミリ秒。
+command.ping.desc;Allows you to know the response time of P.S.S.;Allows you to know the response time of P.S.S.;Permet de connaître le temps de réponse de P.S.S.;P.S.Sの応答時間をしることができます。

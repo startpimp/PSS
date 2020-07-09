@@ -1,2 +1,2 @@
-id;language;log_channel;moderators;bannedWord;capitalLetter;link
-705164545097990204;english;719689749178089503;;true;true;true
+id;language;log_channel;moderators;bannedWord;capitalLetter;link;join_channel;leave_channel
+705164545097990204;english;719689749178089503;;true;true;true;;

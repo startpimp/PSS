@@ -8,6 +8,7 @@ import fr.simplgame.pss.util.CSV;
 import fr.simplgame.pss.util.Loader;
 import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.events.GenericEvent;
+import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.EventListener;
 
@@ -45,6 +46,12 @@ public class BotListener implements EventListener {
 	public void onEvent(GenericEvent event) {
 		if (event instanceof MessageReceivedEvent)
 			onMessage((MessageReceivedEvent) event);
+		if (event instanceof GuildMemberJoinEvent)
+			onJoin((GuildMemberJoinEvent) event);
+	}
+	
+	private void onJoin(GuildMemberJoinEvent gmje) {
+		
 	}
 
 	private void onMessage(MessageReceivedEvent mre) {
