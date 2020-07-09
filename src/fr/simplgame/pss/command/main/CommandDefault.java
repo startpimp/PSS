@@ -10,7 +10,6 @@ import fr.simplgame.pss.command.SimpleCommand;
 import fr.simplgame.pss.util.Loader;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.internal.entities.UserImpl;
 
@@ -27,11 +26,10 @@ public class CommandDefault {
 	@Command(name = "stop", type = ExecutorType.CONSOLE)
 	public void stop() {
 		pss.setRunning(false);
-		System.exit(0);
 	}
 
 	@Command(name = "help", type = ExecutorType.USER)
-	public void help(TextChannel channel, Loader[] loader, User user) {
+	public void help(MessageChannel channel, Loader[] loader, User user) {
 		EmbedBuilder embed = new EmbedBuilder();
 		embed.setTitle(loader[0].lang.get("command.help.title"));
 		embed.setColor(Color.decode("#ed61ce"));

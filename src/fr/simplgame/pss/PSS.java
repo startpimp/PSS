@@ -19,12 +19,13 @@ public class PSS implements Runnable {
 	private boolean running;
 
 	public PSS() throws LoginException {
-		PSS.jda = new JDABuilder(AccountType.BOT).setToken("TOKEN").setActivity(Activity.listening(CommandMap.tag + "help"))
-				.build();
+		PSS.jda = new JDABuilder(AccountType.BOT)
+				.setToken("NjY1NTk4NDAxMjg2NTA0NDU4.XhoBVQ.zfVBpi6pnE2PMyyzQBBdzYqRZ3Y")
+				.setActivity(Activity.listening(CommandMap.tag + "help")).build();
 		jda.addEventListener(new BotListener(commandMap));
 		System.out.println("[SYSTEM] PSS connected");
 	}
-	
+
 	public JDA getJda() {
 		return PSS.jda;
 	}

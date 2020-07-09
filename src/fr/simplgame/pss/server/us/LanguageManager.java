@@ -5,13 +5,13 @@ import fr.simplgame.pss.command.Command.ExecutorType;
 import fr.simplgame.pss.event.BotListener;
 import fr.simplgame.pss.util.CSV;
 import fr.simplgame.pss.util.Loader;
-import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.User;
 
 public class LanguageManager {
 
 	@Command(name = "setlang", type = ExecutorType.USER)
-	public void setLanguage(User user, String[] args, TextChannel channel, Loader[] loader) {
+	public void setLanguage(User user, String[] args, MessageChannel channel, Loader[] loader) {
 		String file = "./res/user.csv";
 
 		boolean userExist = false;
@@ -53,7 +53,7 @@ public class LanguageManager {
 	}
 
 	@Command(name = "langs", type = ExecutorType.USER)
-	public void getLanguages(TextChannel channel, Loader[] loader) {
+	public void getLanguages(MessageChannel channel, Loader[] loader) {
 
 		String[] langs = CSV.getLine("id", "./res/langs.csv").split(";");
 		String message = loader[0].lang.get("server.us.lm.Ls1");
