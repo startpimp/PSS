@@ -38,3 +38,4 @@ command.userinfo.syntax; [user]; [user]; [utilisateur];［ユーザー］
 command.ping.title;Response time;Response time;Temps de réponse;応答時間 
 command.ping.field;P.S.S’s response time: [PING]ms.;P.S.S’s response time: [PING]ms.;Le temps de réponse de P.S.S : [PING]ms.;P.S.Sの応答時間：[PING]ミリ秒。
 command.ping.desc;Allows you to know the response time of P.S.S.;Allows you to know the response time of P.S.S.;Permet de connaître le temps de réponse de P.S.S.;P.S.Sの応答時間をしることができます。
+command.error;This command is unusable as a private message.;This command is unusable as a private message.;Cette commande est inutilisable en message privée.;このコマンドはプライベートメッセージとしては使用できません。

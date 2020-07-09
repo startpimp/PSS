@@ -49,9 +49,9 @@ public class BotListener implements EventListener {
 		if (event instanceof GuildMemberJoinEvent)
 			onJoin((GuildMemberJoinEvent) event);
 	}
-	
+
 	private void onJoin(GuildMemberJoinEvent gmje) {
-		
+
 	}
 
 	private void onMessage(MessageReceivedEvent mre) {
@@ -80,9 +80,8 @@ public class BotListener implements EventListener {
 				return;
 			message = message.replaceFirst(commandMap.getTag(), "");
 			if (commandMap.commandUser(mre.getAuthor(), message, mre.getMessage(), lang)) {
-				if (mre.getTextChannel() != null) {
+				if (mre.getTextChannel().getType() == ChannelType.TEXT)
 					mre.getMessage().delete().queue();
-				}
 			}
 		}
 	}
