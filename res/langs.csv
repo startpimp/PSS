@@ -40,3 +40,5 @@ command.ping.field;P.S.S’s response time: [PING]ms.;P.S.S’s response time: [
 command.ping.desc;Allows you to know the response time of P.S.S.;Allows you to know the response time of P.S.S.;Permet de connaître le temps de réponse de P.S.S.;P.S.Sの応答時間をしることができます。
 command.error;This command is unusable as a private message.;This command is unusable as a private message.;Cette commande est inutilisable en message privée.;このコマンドはプライベートメッセージとしては使用できません。
 command.jls.L1;You are not authorized to use this command.;You are not authorized to use this command.;Vous n’êtes pas authorisé à utiliser cette commande.;このコマンドを使用する権限はありません。
+command.jls.jal.L1;The welcome channel is now [CHANNEL].;The welcome channel is now [CHANNEL].;Le salon de bienvenue est maintenant [CHANNEL].;ウェルカムチャンネルが[CHANNEL]になりました。
+command.jls.jal.L2;The role of the new members is now [ROLE].;;Le rôle des nouveaux membres est maintenant [ROLE].;新メンバーの役は、今は[ROLE]です。

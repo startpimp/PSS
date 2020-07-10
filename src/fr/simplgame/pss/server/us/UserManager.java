@@ -2,6 +2,7 @@ package fr.simplgame.pss.server.us;
 
 import java.awt.Color;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 
 import fr.simplgame.pss.command.Command;
 import fr.simplgame.pss.command.Command.ExecutorType;
@@ -53,35 +54,38 @@ public class UserManager {
 		embed.addField(loader.lang.get("server.us.um.L5"), loader.lang
 				.get("general.word." + CSV.getCell(user.getId(), "language", "./res/user.csv").toLowerCase()), true);
 
-		OffsetDateTime createDate = user.getTimeCreated();
-		int hour = createDate.getHour();
+		ArrayList<String> createDate = formDate(user.getTimeCreated());
+		String hour = createDate.get(3);
 
 		String timeset = "";
-		if (loader.lang.get("general.form.date").contains("[TIMESET]") && hour > 12) {
-			hour = hour - 12;
+		if (loader.lang.get("general.form.date").contains("[TIMESET]") && Integer.parseInt(hour) > 12) {
+			hour = (Integer.parseInt(hour) - 12) + "";
+			if (Integer.parseInt(hour) < 10)
+				hour = "0" + hour;
 			timeset = loader.lang.get("general.word.pm");
 		} else if (loader.lang.get("general.form.date").contains("[TIMESET]"))
 			timeset = loader.lang.get("general.word.am");
 
-		String dateMsg = loader.lang.get("general.form.date").replace("[DAY]", createDate.getDayOfMonth() + "")
-				.replace("[MONTH]", createDate.getMonth().getValue() + "").replace("[YEAR]", createDate.getYear() + "")
-				.replace("[HOUR]", hour + "").replace("[MINUTES]", createDate.getMinute() + "")
-				.replace("[TIMESET]", timeset);
+		String dateMsg = loader.lang.get("general.form.date").replace("[DAY]", createDate.get(0))
+				.replace("[MONTH]", createDate.get(1)).replace("[YEAR]", createDate.get(2)).replace("[HOUR]", hour + "")
+				.replace("[MINUTES]", createDate.get(4) + "").replace("[TIMESET]", timeset);
 		embed.addField(loader.lang.get("server.us.um.L6"), dateMsg, true);
 
 		if (member != null) {
-			OffsetDateTime joinDate = member.getTimeJoined();
-			hour = joinDate.getHour();
-			if (loader.lang.get("general.form.date").contains("[TIMESET]") && hour > 12) {
-				hour = hour - 12;
+			ArrayList<String> joinDate = formDate(member.getTimeJoined());
+			hour = joinDate.get(3);
+
+			if (loader.lang.get("general.form.date").contains("[TIMESET]") && Integer.parseInt(hour) > 12) {
+				hour = (Integer.parseInt(hour) - 12) + "";
+				if (Integer.parseInt(hour) < 10)
+					hour = "0" + hour;
 				timeset = loader.lang.get("general.word.pm");
 			} else if (loader.lang.get("general.form.date").contains("[TIMESET]"))
 				timeset = loader.lang.get("general.word.am");
 
-			dateMsg = loader.lang.get("general.form.date").replace("[DAY]", joinDate.getDayOfMonth() + "")
-					.replace("[MONTH]", joinDate.getMonth().getValue() + "").replace("[YEAR]", joinDate.getYear() + "")
-					.replace("[HOUR]", hour + "").replace("[MINUTES]", joinDate.getMinute() + "")
-					.replace("[TIMESET]", timeset);
+			dateMsg = loader.lang.get("general.form.date").replace("[DAY]", joinDate.get(0))
+					.replace("[MONTH]", joinDate.get(1)).replace("[YEAR]", joinDate.get(2)).replace("[HOUR]", hour + "")
+					.replace("[MINUTES]", joinDate.get(4) + "").replace("[TIMESET]", timeset);
 			embed.addField(loader.lang.get("server.us.um.L8"), dateMsg, true);
 		}
 
@@ -99,6 +103,46 @@ public class UserManager {
 			channel.sendMessage(message).queue();
 
 		}
+	}
+
+	public static ArrayList<String> formDate(OffsetDateTime date) {
+		String day, month, year, hour, minute, second;
+		if ((date.getDayOfMonth() + "").length() == 1)
+			day = "0" + date.getDayOfMonth();
+		else
+			day = date.getDayOfMonth() + "";
+
+		if ((date.getMonth().getValue() + "").length() == 1)
+			month = "0" + date.getMonth().getValue();
+		else
+			month = date.getMonth().getValue() + "";
+
+		if ((date.getHour() + "").length() == 1)
+			hour = "0" + date.getHour();
+		else
+			hour = date.getHour() + "";
+
+		if ((date.getMinute() + "").length() == 1)
+			minute = "0" + date.getMinute();
+		else
+			minute = date.getMinute() + "";
+
+		if ((date.getSecond() + "").length() == 1)
+			second = "0" + date.getSecond();
+		else
+			second = date.getSecond() + "";
+
+		year = date.getYear() + "";
+
+		ArrayList<String> list = new ArrayList<>();
+		list.add(day);
+		list.add(month);
+		list.add(year);
+		list.add(hour);
+		list.add(minute);
+		list.add(second);
+
+		return list;
 	}
 
 }

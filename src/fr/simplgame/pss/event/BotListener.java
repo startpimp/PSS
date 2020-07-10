@@ -51,6 +51,14 @@ public class BotListener implements EventListener {
 	}
 
 	private void onJoin(GuildMemberJoinEvent gmje) {
+		String joinId = CSV.getCell(gmje.getGuild().getId(), "join_channel", "./res/server.csv");
+		if (!joinId.equals("NaN") || !joinId.equals(" "))
+			gmje.getGuild().getTextChannelById(joinId)
+					.sendMessage(CSV.getCell(gmje.getGuild().getId(), "join_message", "./res/server.csv")).queue();
+
+		String roleId = CSV.getCell(gmje.getGuild().getId(), "join_role", "./res/server.csv");
+		if (!roleId.equals("NaN") || !roleId.equals(" "))
+			gmje.getMember().getRoles().add(gmje.getGuild().getRoleById(roleId));
 
 	}
 

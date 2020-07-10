@@ -15,6 +15,8 @@ public class ServerManager {
 	public void server(String[] args, MessageChannel channel, Message message, Loader[] loader, Member member) {
 		if (args[0].equals("join"))
 			JoinAndLeave.add(channel, message, loader, member);
+		if (args[0].equals("role_join"))
+			JoinAndLeave.roleAdd(channel, message, loader, member);
 	}
 
 	public static boolean isAuthorized(Message message, Member member, Loader loader) {
@@ -27,7 +29,7 @@ public class ServerManager {
 		}
 
 		if (!member.isOwner()) {
-			message.getChannel().sendMessage(text)
+			message.getChannel().sendMessage(loader.lang.get("command.jls.L1")).queue();
 		}
 		return false;
 	}

@@ -1,5 +1,6 @@
 package fr.simplgame.pss.server.jls;
 
+import fr.simplgame.pss.server.ServerManager;
 import fr.simplgame.pss.util.CSV;
 import fr.simplgame.pss.util.Loader;
 import net.dv8tion.jda.api.entities.ChannelType;
@@ -15,16 +16,25 @@ public class JoinAndLeave {
 			return;
 		}
 
-		boolean isAuthorize = false;
-		for (String id : CSV.getCell(message.getGuild().getId(), "moderators", "./res/server.csv").split(";")) {
-			if (id.equals(member.getId())) {
-				isAuthorize = true;
-				break;
-			}
+		if (ServerManager.isAuthorized(message, member, loader[0])) {
+			CSV.modifyCell(message.getGuild().getId(), "join_channel", message.getMentionedChannels().get(0).getId(),
+					"./res/server.csv");
+			channel.sendMessage(loader[0].lang.get("command.jls.jal.L1").replace("[CHANNEL]",
+					message.getMentionedChannels().get(0).getAsMention())).queue();
+		}
+	}
+	
+	public static void roleAdd(MessageChannel channel, Message message, Loader[] loader, Member member) {
+		if (channel.getType() != ChannelType.TEXT) {
+			channel.sendMessage(loader[0].lang.get("command.error")).queue();
+			return;
 		}
 
-		if (!member.isOwner() && !isAuthorize) {
-			
+		if (ServerManager.isAuthorized(message, member, loader[0])) {
+			CSV.modifyCell(message.getGuild().getId(), "join_role", message.getMentionedRoles().get(0).getId(),
+					"./res/server.csv");
+			channel.sendMessage(loader[0].lang.get("command.jls.jal.L2").replace("[ROLE]",
+					message.getMentionedRoles().get(0).getAsMention())).queue();
 		}
 	}
 

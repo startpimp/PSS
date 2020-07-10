@@ -107,7 +107,7 @@ public class CSV {
 				} else {
 					try {
 						response.add(new String(vars[column].getBytes(), "UTF-8"));
-					} catch(ArrayIndexOutOfBoundsException e) {
+					} catch (ArrayIndexOutOfBoundsException e) {
 						response.add("NaN");
 					}
 				}
