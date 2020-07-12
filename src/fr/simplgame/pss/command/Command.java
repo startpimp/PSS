@@ -12,6 +12,8 @@ public @interface Command {
 	public String name();
 
 	public String description() default "NaN_NaN";
+	
+	public String alias() default "NaN";
 
 	public ExecutorType type() default ExecutorType.ALL;
 

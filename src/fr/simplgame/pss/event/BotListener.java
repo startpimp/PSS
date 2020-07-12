@@ -9,6 +9,7 @@ import fr.simplgame.pss.util.Loader;
 import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.events.GenericEvent;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
+import net.dv8tion.jda.api.events.guild.member.GuildMemberLeaveEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.EventListener;
 
@@ -48,18 +49,30 @@ public class BotListener implements EventListener {
 			onMessage((MessageReceivedEvent) event);
 		if (event instanceof GuildMemberJoinEvent)
 			onJoin((GuildMemberJoinEvent) event);
+		if (event instanceof GuildMemberLeaveEvent)
+			onLeave((GuildMemberLeaveEvent) event);
 	}
 
 	private void onJoin(GuildMemberJoinEvent gmje) {
 		String joinId = CSV.getCell(gmje.getGuild().getId(), "join_channel", "./res/server.csv");
 		if (!joinId.equals("NaN") || !joinId.equals(" "))
 			gmje.getGuild().getTextChannelById(joinId)
-					.sendMessage(CSV.getCell(gmje.getGuild().getId(), "join_message", "./res/server.csv")).queue();
+					.sendMessage(CSV.getCell(gmje.getGuild().getId(), "join_message", "./res/server.csv")
+							.replace("[USER]", gmje.getMember().getEffectiveName()))
+					.queue();
 
 		String roleId = CSV.getCell(gmje.getGuild().getId(), "join_role", "./res/server.csv");
 		if (!roleId.equals("NaN") || !roleId.equals(" "))
-			gmje.getMember().getRoles().add(gmje.getGuild().getRoleById(roleId));
+			gmje.getGuild().addRoleToMember(gmje.getMember().getId(), gmje.getGuild().getRoleById(roleId)).queue();
+	}
 
+	private void onLeave(GuildMemberLeaveEvent gmle) {
+		String leaveId = CSV.getCell(gmle.getGuild().getId(), "leave_channel", "./res/server.csv");
+		if (!leaveId.equals("NaN") || !leaveId.equals(" "))
+			gmle.getGuild().getTextChannelById(leaveId)
+					.sendMessage(CSV.getCell(gmle.getGuild().getId(), "leave_message", "./res/server.csv")
+							.replace("[USER]", gmle.getMember().getEffectiveName()))
+					.queue();
 	}
 
 	private void onMessage(MessageReceivedEvent mre) {

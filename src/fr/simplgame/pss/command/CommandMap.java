@@ -52,8 +52,11 @@ public final class CommandMap {
 				Command command = method.getAnnotation(Command.class);
 				method.setAccessible(true);
 				SimpleCommand simpleCommand = new SimpleCommand(command.name(), command.description(), command.type(),
-						object, method);
-				commands.put(command.name(), simpleCommand);
+						object, method, command.alias());
+				if (command.alias().equals("NaN"))
+					commands.put(command.name(), simpleCommand);
+				else
+					commands.put(command.name() + "_" + command.alias(), simpleCommand);
 			}
 		}
 	}
@@ -86,12 +89,23 @@ public final class CommandMap {
 		return true;
 	}
 
+	private SimpleCommand simpleCommand;
+
 	private Object[] getCommand(String command) {
 		String[] commandSplit = command.split(" ");
 		String[] args = new String[commandSplit.length - 1];
 		for (int i = 1; i < commandSplit.length; i++)
 			args[i - 1] = commandSplit[i];
-		SimpleCommand simpleCommand = commands.get(commandSplit[0]);
+		simpleCommand = commands.get(commandSplit[0].toLowerCase());
+		if (simpleCommand == null) {
+			commands.forEach((str, sc) -> {
+				String[] strs = str.split("_");
+				if (strs.length == 2) {
+					if (strs[0].equals(commandSplit[0].toLowerCase()) || strs[1].equals(commandSplit[0].toLowerCase()))
+						simpleCommand = sc;
+				}
+			});
+		}
 		return new Object[] { simpleCommand, args };
 	}
 

@@ -17,7 +17,7 @@ import net.dv8tion.jda.api.entities.User;
 
 public class UserManager {
 
-	@Command(name = "userinfo", type = ExecutorType.USER)
+	@Command(name = "userinfo", type = ExecutorType.USER, alias = "ui")
 	public void user(Member member, MessageChannel channel, Loader[] loader, Message message, User user) {
 
 		EmbedBuilder embed = new EmbedBuilder();

@@ -1,25 +1,71 @@
 package fr.simplgame.pss.server;
 
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
+
 import fr.simplgame.pss.command.Command;
 import fr.simplgame.pss.command.Command.ExecutorType;
 import fr.simplgame.pss.server.jls.JoinAndLeave;
 import fr.simplgame.pss.util.CSV;
 import fr.simplgame.pss.util.Loader;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
 
 public class ServerManager {
 
-	@Command(name = "server", type = ExecutorType.USER, description = "server")
-	public void server(String[] args, MessageChannel channel, Message message, Loader[] loader, Member member) {
-		if (args[0].equals("join"))
-			JoinAndLeave.add(channel, message, loader, member);
-		if (args[0].equals("role_join"))
-			JoinAndLeave.roleAdd(channel, message, loader, member);
+	private List<String> commands = new ArrayList<>();
+
+	public ServerManager() {
+		commands.add("join_message");
+		commands.add("leave_message");
+		commands.add("join");
+		commands.add("leave");
+		commands.add("rolejoin");
 	}
 
-	public static boolean isAuthorized(Message message, Member member, Loader loader) {
+	@Command(name = "server", type = ExecutorType.USER, description = "server")
+	public void server(String[] args, MessageChannel channel, Message message, Loader[] loader, Member member) {
+		if (channel.getType() != ChannelType.TEXT) {
+			channel.sendMessage(loader[0].lang.get("command.error")).queue();
+			return;
+		}
+
+		if (!isAuthorized(message, member, loader[0], true))
+			return;
+
+		if (args.length == 2) {
+			if (args[1].equalsIgnoreCase("message") && (args[0].equals("join") || args[0].equals("leave")))
+				JoinAndLeave.addMessage(channel, message, args[0], loader[0]);
+		} else {
+			if (args[0].equals("help"))
+				help(channel, loader[0]);
+			if (args[0].equals("join") || args[0].equals("leave"))
+				JoinAndLeave.add(channel, message, loader, member, args[0]);
+			if (args[0].equals("rolejoin"))
+				JoinAndLeave.roleAdd(channel, message, loader, member);
+		}
+	}
+
+	private void help(MessageChannel channel, Loader loader) {
+		EmbedBuilder embed = new EmbedBuilder();
+		embed.setTitle(loader.lang.get("command.server.help.title"));
+		embed.setDescription(loader.lang.get("command.help.field1"));
+		embed.setColor(Color.decode("#ed61ce"));
+		for (String name : commands) {
+			String syntax = loader.lang.get("command.server." + name + ".syntax");
+			if (syntax.equals("NaN"))
+				syntax = "";
+			embed.addField("server " + name.replace("_", " ") + syntax,
+					loader.lang.get("command.server." + name + ".desc"), true);
+		}
+		channel.sendMessage(embed.build()).queue();
+	}
+
+	public static boolean isAuthorized(Message message, Member member, Loader loader, boolean msg) {
 
 		if (member.isOwner())
 			return true;
@@ -28,7 +74,7 @@ public class ServerManager {
 				return true;
 		}
 
-		if (!member.isOwner()) {
+		if (!member.isOwner() && msg) {
 			message.getChannel().sendMessage(loader.lang.get("command.jls.L1")).queue();
 		}
 		return false;

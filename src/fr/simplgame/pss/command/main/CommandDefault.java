@@ -7,8 +7,11 @@ import fr.simplgame.pss.command.Command;
 import fr.simplgame.pss.command.Command.ExecutorType;
 import fr.simplgame.pss.command.CommandMap;
 import fr.simplgame.pss.command.SimpleCommand;
+import fr.simplgame.pss.server.ServerManager;
 import fr.simplgame.pss.util.Loader;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.internal.entities.UserImpl;
@@ -28,8 +31,8 @@ public class CommandDefault {
 		pss.setRunning(false);
 	}
 
-	@Command(name = "help", type = ExecutorType.USER)
-	public void help(MessageChannel channel, Loader[] loader, User user) {
+	@Command(name = "help", type = ExecutorType.USER, alias = "h")
+	public void help(MessageChannel channel, Loader[] loader, User user, Message message, Member member) {
 		EmbedBuilder embed = new EmbedBuilder();
 		embed.setTitle(loader[0].lang.get("command.help.title"));
 		embed.setColor(Color.decode("#ed61ce"));
@@ -38,10 +41,32 @@ public class CommandDefault {
 		for (SimpleCommand command : cm.getCommands()) {
 			if (command.getExecutorType() != ExecutorType.CONSOLE) {
 				String syntax = loader[0].lang.get("command." + command.getName() + ".syntax");
+
 				if (syntax.equals("NaN"))
 					syntax = "";
-				embed.addField(command.getName() + syntax, loader[0].lang.get("command." + command.getName() + ".desc"),
-						true);
+
+				boolean sendMessage = false;
+
+				if (member != null && command.getDescription().equals("server")) {
+					if (ServerManager.isAuthorized(message, member, loader[0], false)) {
+						sendMessage = true;
+					}
+				} else if (!command.getDescription().equals("iD")) {
+					sendMessage = true;
+				}
+
+				if (sendMessage) {
+					if (!command.getAlias().equals("NaN")) {
+						embed.addField(
+								command.getName() + syntax + "\n" + loader[0].lang.get("command.help.alias")
+										+ command.getAlias(),
+								loader[0].lang.get("command." + command.getName() + ".desc"), true);
+					} else {
+						embed.addField(command.getName() + syntax,
+								loader[0].lang.get("command." + command.getName() + ".desc"), true);
+					}
+				}
+
 			}
 		}
 

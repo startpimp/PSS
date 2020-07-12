@@ -5,33 +5,34 @@ import java.lang.reflect.Method;
 import fr.simplgame.pss.command.Command.ExecutorType;
 
 /**
- * Permet de récupérer toutes les informations concernant une commande
+ * Permet de rï¿½cupï¿½rer toutes les informations concernant une commande
  * 
  * @author StartPimp47
  *
  */
 public final class SimpleCommand {
-	private final String name, description;
+	private final String name, description, alias;
 	private final ExecutorType executor;
 	private final Object object;
 	private final Method method;
 
 	/**
-	 * Créer un élément commande
+	 * Crï¿½er un ï¿½lï¿½ment commande
 	 * 
 	 * @param name        Nom de la commande
 	 * @param description Description de la commande
-	 * @param executor    Définire l'exécuteur potentiel de cette commande
+	 * @param executor    Dï¿½finire l'exï¿½cuteur potentiel de cette commande
 	 * @param object
 	 * @param method
 	 */
-	public SimpleCommand(String name, String description, ExecutorType executor, Object object, Method method) {
+	public SimpleCommand(String name, String description, ExecutorType executor, Object object, Method method, String alias) {
 		super();
 		this.name = name;
 		this.description = description;
 		this.executor = executor;
 		this.object = object;
 		this.method = method;
+		this.alias = alias;
 	}
 
 	/**
@@ -39,6 +40,13 @@ public final class SimpleCommand {
 	 */
 	public String getName() {
 		return name;
+	}
+	
+	/**
+	 * @return Retourne l'alias de la commande
+	 */
+	public String getAlias() {
+		return alias;
 	}
 
 	/**
@@ -49,7 +57,7 @@ public final class SimpleCommand {
 	}
 
 	/**
-	 * @return Retourne l'exécuteur potentiel de la commande
+	 * @return Retourne l'exï¿½cuteur potentiel de la commande
 	 */
 	public ExecutorType getExecutorType() {
 		return executor;
