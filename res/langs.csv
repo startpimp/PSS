@@ -57,3 +57,5 @@ command.server.leave.desc;Allows you to add or modify the goodbye channel.;Allow
 command.server.leave.syntax; [channel]; [channel]; [salon];［チャンネル］
 command.server.rolejoin.desc;Allows you to add one or more roles to the new user.;Allows you to add one or more roles to the new user.;Permet d'ajouter un ou plusieurs rôles au nouvel utilisateur.;新しいユーザーに1つ以上のロールを追加することができます。
 command.server.rolejoin.syntax; [role(s)]; [role(s)]; [rôle(s)];［ロール（ズ）］
+server.error.jls.L1;Access denied;Access denied;Accès refusé;アクセスが拒否された
+server.error.jls.L2;The following role(s) is (are) at the same height or higher than P.S.S.\n[ROLE];The following role(s) is (are) at the same height or higher than P.S.S.\n[ROLE];Le(s) rôle(s) suivant(s) est (sont) à même hauteur ou plus haut que P.S.S.\n[ROLE];以下の役割は、P.S.Sと同じかそれ以上の高さにあります。\n[ROLE]

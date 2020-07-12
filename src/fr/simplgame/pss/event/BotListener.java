@@ -1,16 +1,19 @@
 package fr.simplgame.pss.event;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.simplgame.pss.command.CommandMap;
 import fr.simplgame.pss.util.CSV;
 import fr.simplgame.pss.util.Loader;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.events.GenericEvent;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberLeaveEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.exceptions.HierarchyException;
 import net.dv8tion.jda.api.hooks.EventListener;
 
 /**
@@ -62,8 +65,44 @@ public class BotListener implements EventListener {
 					.queue();
 
 		String roleId = CSV.getCell(gmje.getGuild().getId(), "join_role", "./res/server.csv");
-		if (!roleId.equals("NaN") || !roleId.equals(" "))
-			gmje.getGuild().addRoleToMember(gmje.getMember().getId(), gmje.getGuild().getRoleById(roleId)).queue();
+		String roleWrong = "NaN";
+		Loader loader = null;
+		boolean roleError = false;
+		for (Loader l : loaders) {
+			if (l.getLang().equals(CSV.getCell(gmje.getGuild().getId(), "language", "./res/server.csv"))) {
+				loader = l;
+				break;
+			}
+		}
+		if (!roleId.equals("NaN") || !roleId.equals(" ")) {
+			String[] roles = roleId.split("_");
+			for (String role : roles) {
+				try {
+					gmje.getGuild().addRoleToMember(gmje.getMember().getId(), gmje.getGuild().getRoleById(role))
+							.queue();
+				} catch (HierarchyException e) {
+					if (roleWrong.equals("NaN"))
+						roleWrong = gmje.getGuild().getRoleById(role).getAsMention();
+					else
+						roleWrong += loader.lang.get("general.mark.comma")
+								+ gmje.getGuild().getRoleById(role).getAsMention();
+					roleError = true;
+				}
+			}
+		}
+
+		roleWrong += loader.lang.get("general.mark.dot");
+		if (roleError) {
+			if (!CSV.getCell(gmje.getGuild().getId(), "log_channel", "./res/server.csv").equals("NaN")) {
+				EmbedBuilder embed = new EmbedBuilder();
+				embed.setTitle(loader.lang.get("server.error.jls.L1"));
+				embed.setDescription(loader.lang.get("server.error.jls.L2").replace("\\n[ROLE]", "\n" + roleWrong));
+				embed.setColor(Color.decode("#D61C1C"));
+				gmje.getGuild()
+						.getTextChannelById(CSV.getCell(gmje.getGuild().getId(), "log_channel", "./res/server.csv"))
+						.sendMessage(embed.build()).queue();
+			}
+		}
 	}
 
 	private void onLeave(GuildMemberLeaveEvent gmle) {
