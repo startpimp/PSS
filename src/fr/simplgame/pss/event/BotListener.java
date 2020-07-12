@@ -57,6 +57,11 @@ public class BotListener implements EventListener {
 	}
 
 	private void onJoin(GuildMemberJoinEvent gmje) {
+
+		if (CSV.getLine(gmje.getGuild().getId(), "./res/server.csv").equals("NaN"))
+			CSV.addLine(gmje.getGuild().getId() + ";english; ; ;false;false;false; ; ; ;Welcome [USER];Bye bye [USER]",
+					"./res/server.csv");
+
 		String joinId = CSV.getCell(gmje.getGuild().getId(), "join_channel", "./res/server.csv");
 		if (!joinId.equals("NaN") || !joinId.equals(" "))
 			gmje.getGuild().getTextChannelById(joinId)
@@ -106,6 +111,10 @@ public class BotListener implements EventListener {
 	}
 
 	private void onLeave(GuildMemberLeaveEvent gmle) {
+		if (CSV.getLine(gmle.getGuild().getId(), "./res/server.csv").equals("NaN"))
+			CSV.addLine(gmle.getGuild().getId() + ";english; ; ;false;false;false; ; ; ;Welcome [USER];Bye bye [USER]",
+					"./res/server.csv");
+
 		String leaveId = CSV.getCell(gmle.getGuild().getId(), "leave_channel", "./res/server.csv");
 		if (!leaveId.equals("NaN") || !leaveId.equals(" "))
 			gmle.getGuild().getTextChannelById(leaveId)
