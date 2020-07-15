@@ -3,13 +3,16 @@ package fr.simplgame.pss.server;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
+import fr.simplgame.pss.PSS;
 import fr.simplgame.pss.command.Command;
 import fr.simplgame.pss.command.Command.ExecutorType;
 import fr.simplgame.pss.server.jls.JoinAndLeave;
 import fr.simplgame.pss.util.CSV;
 import fr.simplgame.pss.util.Loader;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
@@ -34,10 +37,7 @@ public class ServerManager {
 			return;
 		}
 
-		if (!isAuthorized(message, member, loader[0], true))
-			return;
-
-		if (args.length == 2) {
+		if (args.length >= 2) {
 			if (args[1].equalsIgnoreCase("message") && (args[0].equals("join") || args[0].equals("leave")))
 				JoinAndLeave.addMessage(channel, message, args[0], loader[0]);
 		} else {
@@ -65,7 +65,22 @@ public class ServerManager {
 		channel.sendMessage(embed.build()).queue();
 	}
 
-	public static boolean isAuthorized(Message message, Member member, Loader loader, boolean msg) {
+	public static boolean isAuthorized(Message message, Member member, Loader loader, boolean msg,
+			Permission permission) {
+
+		if (!member.hasPermission(permission) && msg) {
+			message.getChannel()
+					.sendMessage(loader.lang.get("manager.missing.user").replace("[PERMISSION]", permission.getName()))
+					.queue();
+			return false;
+		}
+
+		if (!Objects.requireNonNull(member.getGuild().getMemberById(PSS.jda.getSelfUser().getId())).hasPermission(permission) && msg) {
+			message.getChannel()
+					.sendMessage(loader.lang.get("manager.missing.bot").replace("[PERMISSION]", permission.getName()))
+					.queue();
+			return false;
+		}
 
 		if (member.isOwner())
 			return true;

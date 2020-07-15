@@ -75,7 +75,7 @@ public final class CommandMap {
 		}
 	}
 
-	public boolean commandUser(User user, String command, Message message, Loader[] lang) {
+	public boolean commandUser(User author, String command, Message message, Loader[] lang) {
 		Object[] object = getCommand(command);
 		if (object[0] == null || ((SimpleCommand) object[0]).getExecutorType() == ExecutorType.CONSOLE)
 			return false;
@@ -94,8 +94,7 @@ public final class CommandMap {
 	private Object[] getCommand(String command) {
 		String[] commandSplit = command.split(" ");
 		String[] args = new String[commandSplit.length - 1];
-		for (int i = 1; i < commandSplit.length; i++)
-			args[i - 1] = commandSplit[i];
+		System.arraycopy(commandSplit, 1, args, 0, commandSplit.length - 1);
 		simpleCommand = commands.get(commandSplit[0].toLowerCase());
 		if (simpleCommand == null) {
 			commands.forEach((str, sc) -> {
@@ -130,14 +129,18 @@ public final class CommandMap {
 				objects[i] = message;
 			else if (parameters[i].getType() == JDA.class)
 				objects[i] = bot.getJda();
-			else if (parameters[i].getType() == MessageChannel.class)
+			else if (parameters[i].getType() == MessageChannel.class) {
+				assert message != null;
 				objects[i] = message.getChannel();
+			}
 			else if (parameters[i].getType() == Loader[].class) {
 				lang[0].load();
 				lang[1].load();
 				objects[i] = lang;
-			} else if (parameters[i].getType() == Member.class)
+			} else if (parameters[i].getType() == Member.class) {
+				assert message != null;
 				objects[i] = message.getMember();
+			}
 		}
 		simpleCommand.getMethod().invoke(simpleCommand.getObject(), objects);
 	}

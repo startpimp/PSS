@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -19,6 +20,10 @@ public class CSV {
 	 * S�parateur logique de chaque donn�es par ligne Par d�faut, il est sur ' ; '.
 	 */
 	public static String separator = ";";
+	
+	private static String changeFile(String file) {
+		return file.replace("./", "C:\\Users\\Megaport\\Documents\\BOTS\\PSS\\");
+	}
 
 	/**
 	 * Permet de lire le contenu d'une cellule
@@ -29,28 +34,45 @@ public class CSV {
 	 * @return Retourne le contenu de la cellule. Si inconnu, alors "NaN"
 	 */
 	public static String getCell(String key, String var, String file) {
+		int column = -1;
+
+		file = changeFile(file);
 		try (FileInputStream fis = new FileInputStream(new File(file))) {
+
 			Scanner sc = new Scanner(fis);
-			int column = -1;
 			while (sc.hasNextLine()) {
+
 				String line = sc.nextLine();
 				String[] vars = line.split(separator);
+
 				if (column == -1) {
+
 					for (int i = 0; i < vars.length; i++) {
-						if (new String(vars[i].getBytes(), "UTF-8").equals(var))
+
+						if (new String(vars[i].getBytes(), StandardCharsets.UTF_8).equals(var))
 							column = i;
+
 					}
+
 				} else {
-					if (new String(vars[0].getBytes(), "UTF-8").equals(key)) {
+
+					if (new String(vars[0].getBytes(), StandardCharsets.UTF_8).equals(key)) {
+
 						sc.close();
-						return new String(vars[column].getBytes(), "UTF-8");
+						return new String(vars[column].getBytes(), StandardCharsets.UTF_8);
+
 					}
+
 				}
+
 			}
 			sc.close();
+
 		} catch (Exception e) {
+
 			e.printStackTrace();
 			return "NaN";
+
 		}
 
 		return "NaN";
@@ -65,20 +87,32 @@ public class CSV {
 	 *         inconnu, alors "NaN"
 	 */
 	public static String getLine(String key, String file) {
+
+		file = changeFile(file);
 		try (FileInputStream fis = new FileInputStream(new File(file))) {
+
 			Scanner sc = new Scanner(fis);
 			while (sc.hasNextLine()) {
+
 				String line = sc.nextLine();
 				String[] vars = line.split(separator);
+
 				if (vars[0].equals(key)) {
+
 					sc.close();
-					return new String(line.getBytes(), "UTF-8");
+					return new String(line.getBytes(), StandardCharsets.UTF_8);
+
 				}
+
 			}
+
 			sc.close();
+
 		} catch (Exception e) {
+
 			e.printStackTrace();
 			return "NaN";
+
 		}
 
 		return "NaN";
@@ -92,31 +126,52 @@ public class CSV {
 	 * @return Retourne la colonne sous forme de List. Si inconnu, alors null
 	 */
 	public static List<String> getColumn(String title, String file) {
+
+		file = changeFile(file);
 		List<String> response = new ArrayList<>();
+		int column = -1;
+
 		try (FileInputStream fis = new FileInputStream(new File(file))) {
+
 			Scanner sc = new Scanner(fis);
-			int column = -1;
 			while (sc.hasNextLine()) {
+
 				String line = sc.nextLine();
 				String[] vars = line.split(separator);
+
 				if (column == -1) {
+
 					for (int i = 0; i < vars.length; i++) {
-						if (new String(vars[i].getBytes(), "UTF-8").equals(title))
+
+						if (new String(vars[i].getBytes(), StandardCharsets.UTF_8).equals(title))
 							column = i;
+
 					}
+
 				} else {
+
 					try {
-						response.add(new String(vars[column].getBytes(), "UTF-8"));
+
+						response.add(new String(vars[column].getBytes(), StandardCharsets.UTF_8));
+
 					} catch (ArrayIndexOutOfBoundsException e) {
+
 						response.add("NaN");
+
 					}
+
 				}
+
 			}
+
 			sc.close();
 			return response;
+
 		} catch (Exception e) {
+
 			e.printStackTrace();
 			return null;
+
 		}
 	}
 
@@ -129,30 +184,51 @@ public class CSV {
 	 * @return Retourne l'ID de la cellule. Si inconnu, alors "NaN"
 	 */
 	public static String getKey(String var, String word, String file) {
+
+		file = changeFile(file);
+		int column = -1;
+
 		try (FileInputStream fis = new FileInputStream(new File(file))) {
+
 			Scanner sc = new Scanner(fis);
-			int column = -1;
 			while (sc.hasNextLine()) {
+
 				String line = sc.nextLine();
 				String[] vars = line.split(separator);
+
 				if (column == -1) {
+
 					for (int i = 0; i < vars.length; i++) {
-						if (new String(vars[i].getBytes(), "UTF-8").equals(var))
+
+						if (new String(vars[i].getBytes(), StandardCharsets.UTF_8).equals(var))
 							column = i;
+
 					}
+
 				} else {
-					for (int i = 0; i < vars.length; i++) {
-						if (vars[i].equals(word)) {
+
+					for (String s : vars) {
+
+						if (s.equals(word)) {
+
 							sc.close();
-							return new String(vars[0].getBytes(), "UTF-8");
+							return new String(vars[0].getBytes(), StandardCharsets.UTF_8);
+
 						}
+
 					}
+
 				}
+
 			}
+
 			sc.close();
+
 		} catch (Exception e) {
+
 			e.printStackTrace();
 			return "NaN";
+
 		}
 
 		return "NaN";
@@ -166,9 +242,10 @@ public class CSV {
 	 * @param file chemin vers le fichier cibl�
 	 */
 	public static void addLine(String line, String file) {
+		file = changeFile(file);
+
 		try (PrintWriter pw = new PrintWriter(new FileOutputStream(new File(file), true))) {
-			pw.println(new String(line.getBytes(), "UTF-8"));
-			pw.close();
+			pw.println(new String(line.getBytes(), StandardCharsets.UTF_8));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return;
@@ -186,7 +263,7 @@ public class CSV {
 	 * @param file    Chemin vers le fichier cibl�
 	 */
 	public static void modifyCell(String key, String var, String content, String file) {
-
+		file = changeFile(file);
 		List<String> lines = new ArrayList<>();
 		// Getting all lines
 		try (FileInputStream fis = new FileInputStream(new File(file))) {
@@ -215,13 +292,14 @@ public class CSV {
 				break;
 		}
 
-		String newLine = modifiedLine.split(separator)[0];
+		assert modifiedLine != null;
+		StringBuilder newLine = new StringBuilder(modifiedLine.split(separator)[0]);
 		// Modify cell by his key and column position
 		for (int i = 1; i < modifiedLine.split(separator).length; i++) {
 			if (i == columnPosition)
-				newLine += separator + content;
+				newLine.append(separator).append(content);
 			else
-				newLine += separator + modifiedLine.split(separator)[i];
+				newLine.append(separator).append(modifiedLine.split(separator)[i]);
 		}
 
 		// Rewriting file with modified contents
@@ -232,7 +310,6 @@ public class CSV {
 				else
 					pw.println(line);
 			}
-			pw.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return;

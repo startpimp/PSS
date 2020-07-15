@@ -1,7 +1,8 @@
 package fr.simplgame.pss.util;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class Loader {
 
@@ -11,7 +12,7 @@ public class Loader {
 		var = language;
 		load();
 	}
-	
+
 	public Loader() {
 		load();
 	}
@@ -26,26 +27,27 @@ public class Loader {
 		String file = "./res/langs.csv";
 		lang.getVars().clear();
 
-		for (String word : CSV.getColumn(var, file)) {
-			lang.getVars().add(CSV.getKey(var, word, file) + "=" + word);
+		for (String word : Objects.requireNonNull(CSV.getColumn(var, file))) {
+			System.out.println(var + ";" + word);
+			lang.vars.put(CSV.getKey(var, word, file), word);
 		}
 
 	}
 
 	public static class Lang {
 
-		public List<String> vars = new ArrayList<>();
+		public Map<String, String> vars = new HashMap<>();
 
-		public List<String> getVars() {
+		public Map<String, String> getVars() {
 			return vars;
 		}
 
 		public String get(String var) {
-			for (String string : vars) {
-				if (string.split("=")[0].equals(var))
-					return string.split("=")[1];
-			}
-			return "NaN";
+			String str = vars.get(var);
+			if (str == null)
+				return "NaN";
+			else
+				return str;
 		}
 
 	}

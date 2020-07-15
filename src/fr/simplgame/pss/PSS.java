@@ -1,7 +1,6 @@
 package fr.simplgame.pss;
 
 import java.util.Scanner;
-
 import javax.security.auth.login.LoginException;
 
 import fr.simplgame.pss.command.CommandMap;

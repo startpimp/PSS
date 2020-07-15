@@ -15,6 +15,7 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.User;
 
+@SuppressWarnings("unused")
 public class UserManager {
 
 	@Command(name = "userinfo", type = ExecutorType.USER, alias = "ui")
@@ -91,7 +92,7 @@ public class UserManager {
 
 		channel.sendMessage(embed.build()).queue();
 
-		String message = "NaN";
+		String message;
 		if (user.isBot() || user.isFake()) {
 			message = loader.lang.get("server.us.um.L7");
 

@@ -8,6 +8,9 @@ import fr.simplgame.pss.util.Loader;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.User;
 
+import java.util.Objects;
+
+@SuppressWarnings("unused")
 public class LanguageManager {
 
 	@Command(name = "setlang", type = ExecutorType.USER)
@@ -15,7 +18,7 @@ public class LanguageManager {
 		String file = "./res/user.csv";
 
 		boolean userExist = false;
-		for (String id : CSV.getColumn("id", file)) {
+		for (String id : Objects.requireNonNull(CSV.getColumn("id", file))) {
 			if (id.equals(user.getId())) {
 				userExist = true;
 				break;
@@ -56,15 +59,14 @@ public class LanguageManager {
 	public void getLanguages(MessageChannel channel, Loader[] loader) {
 
 		String[] langs = CSV.getLine("id", "./res/langs.csv").split(";");
-		String message = loader[0].lang.get("server.us.lm.Ls1");
-		message += "`" + langs[1] + "`";
+		StringBuilder message = new StringBuilder(loader[0].lang.get("server.us.lm.Ls1"));
+		message.append("`").append(langs[1]).append("`");
 		for (int i = 2; i < langs.length - 1; i++) {
-			message += loader[0].lang.get("general.mark.comma") + "`" + langs[i] + "`";
+			message.append(loader[0].lang.get("general.mark.comma")).append("`").append(langs[i]).append("`");
 		}
-		message += loader[0].lang.get("general.word.and") + "`" + langs[langs.length - 1] + "`"
-				+ loader[0].lang.get("general.mark.dot");
+		message.append(loader[0].lang.get("general.word.and")).append("`").append(langs[langs.length - 1]).append("`").append(loader[0].lang.get("general.mark.dot"));
 
-		channel.sendMessage(message).queue();
+		channel.sendMessage(message.toString()).queue();
 
 	}
 
@@ -73,7 +75,7 @@ public class LanguageManager {
 		Loader l = new Loader(args[0]);
 		l.load();
 		BotListener.loaders.add(l);
-		System.out.println(args[0] + " haw been added");
+		System.out.println(args[0] + " has been added");
 	}
 
 }

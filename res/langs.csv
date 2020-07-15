@@ -28,7 +28,7 @@ command.help.title;List of commands;List of commands;Liste des commandes;コマ�
 command.help.desc;Displays all commands.;Displays all commands.;Permet d’afficher la totalité des commandes.;すべてのコマンドを表示します。
 command.help.field1;All commands;All commands;Toutes les commandes;すべてのコマンド
 general.mark.double_dot;: ;: ; : ;：
-command.help.required;[] : required\n() : not required;[] : required\n() : not required;[] : obligatoire\n() : pas obligatoire;［］：所要の\n（）：所要じゃない
+command.help.required;[] : required\n() : not required;[] : required\n() : not required;[] : obligatoire\n() : pas obligatoire;［］：所要です\n（）：所要じゃない
 command.help.field2;Useful;Useful;Utile;使用な
 command.langs.desc;Allows you to know all the available languages.;Allows you to know all the available languages.;Permet de connaître toutes les langues disponibles.;利用可能なすべての言語をしることができます。
 command.setlang.desc;Allows you to change the language in which P.S.S speaks to you. The `language` must be written in its original language.;Allows you to change the language in which P.S.S speaks to you. The `language` must be written in its original language.;Vous permet de changer la langue dans laquelle P.S.S vous parle. La `langue` doit être écrite dans sa langue d'origine.;P.S.Sが話しかけてくる言語を変更することができます。`言語`は元の言語で書かれていなければならない。
@@ -59,3 +59,8 @@ command.server.rolejoin.desc;Allows you to add one or more roles to the new user
 command.server.rolejoin.syntax; [role(s)]; [role(s)]; [rôle(s)];［ロール（ズ）］
 server.error.jls.L1;Access denied;Access denied;Accès refusé;アクセスが拒否された
 server.error.jls.L2;The following role(s) is (are) at the same height or higher than P.S.S.\n[ROLE];The following role(s) is (are) at the same height or higher than P.S.S.\n[ROLE];Le(s) rôle(s) suivant(s) est (sont) à même hauteur ou plus haut que P.S.S.\n[ROLE];以下の役割は、P.S.Sと同じかそれ以上の高さにあります。\n[ROLE]
+manager.missing.user;You lack the following permission: [PERMISSION].;You lack the following permission: [PERMISSION].;Vous manquez de la permission suivante : [PERMISSION].;あなたは以下の権限を持っていません：[PERMISSION]。
+manager.missing.bot;The bot lacks the following permission: [PERMISSION].;The bot lacks the following permission: [PERMISSION].;Le bot manque de la permission suivante : [PERMISSION].;このボットは以下の権限を持っていません：[PERMISSION]。
+general.L1;One or more arguments are missing.;One or more arguments are missing.;Il manque un ou plusieurs arguments.;1つ以上の引数が欠落しています。
+command.jls.jal.L4;Welcome message added or modified.;Welcome message added or modified.;Message de bienvenue ajouté ou modifié.;ウェルカムメッセージを追加や修正しました。
+command.jls.jal.L5;Goodbye message added or modified.;Goodbye message added or modified.;Message d’au revoir ajouté ou modifié.;さよならメッセージを追加や修正しました。

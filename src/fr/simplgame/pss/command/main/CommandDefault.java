@@ -10,6 +10,7 @@ import fr.simplgame.pss.command.SimpleCommand;
 import fr.simplgame.pss.server.ServerManager;
 import fr.simplgame.pss.util.Loader;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
@@ -48,7 +49,7 @@ public class CommandDefault {
 				boolean sendMessage = false;
 
 				if (member != null && command.getDescription().equals("server")) {
-					if (ServerManager.isAuthorized(message, member, loader[0], false)) {
+					if (ServerManager.isAuthorized(message, member, loader[0], false, Permission.ADMINISTRATOR)) {
 						sendMessage = true;
 					}
 				} else if (!command.getDescription().equals("iD")) {

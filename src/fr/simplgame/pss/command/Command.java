@@ -9,15 +9,15 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Command {
 
-	public String name();
+	String name();
 
-	public String description() default "NaN_NaN";
+	String description() default "NaN_NaN";
 	
-	public String alias() default "NaN";
+	String alias() default "NaN";
 
-	public ExecutorType type() default ExecutorType.ALL;
+	ExecutorType type() default ExecutorType.ALL;
 
-	public enum ExecutorType {
-		ALL, USER, CONSOLE;
+	enum ExecutorType {
+		ALL, USER, CONSOLE
 	}
 }
