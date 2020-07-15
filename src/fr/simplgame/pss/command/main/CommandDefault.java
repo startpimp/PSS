@@ -1,7 +1,5 @@
 package fr.simplgame.pss.command.main;
 
-import java.awt.Color;
-
 import fr.simplgame.pss.PSS;
 import fr.simplgame.pss.command.Command;
 import fr.simplgame.pss.command.Command.ExecutorType;
@@ -17,6 +15,10 @@ import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.internal.entities.UserImpl;
 
+import java.awt.*;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+@SuppressWarnings("unused")
 public class CommandDefault {
 
 	private PSS pss;
@@ -46,18 +48,19 @@ public class CommandDefault {
 				if (syntax.equals("NaN"))
 					syntax = "";
 
-				boolean sendMessage = false;
+				AtomicBoolean sendMessage = new AtomicBoolean(false);
 
 				if (member != null && command.getDescription().equals("server")) {
 					if (ServerManager.isAuthorized(message, member, loader[0], false, Permission.ADMINISTRATOR)) {
-						sendMessage = true;
+						sendMessage.set(true);
 					}
 				} else if (!command.getDescription().equals("iD")) {
-					sendMessage = true;
+					sendMessage.set(true);
 				}
 
-				if (sendMessage) {
+				if (sendMessage.get()) {
 					if (!command.getAlias().equals("NaN")) {
+						System.out.println(loader[0].getLang());
 						embed.addField(
 								command.getName() + syntax + "\n" + loader[0].lang.get("command.help.alias")
 										+ command.getAlias(),
