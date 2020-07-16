@@ -28,7 +28,6 @@ public class Loader {
 		lang.getVars().clear();
 
 		for (String word : Objects.requireNonNull(CSV.getColumn(var, file))) {
-			System.out.println(var + ";" + word);
 			lang.vars.put(CSV.getKey(var, word, file), word);
 		}
 

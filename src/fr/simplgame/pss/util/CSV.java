@@ -20,14 +20,14 @@ public class CSV {
 	 * S�parateur logique de chaque donn�es par ligne Par d�faut, il est sur ' ; '.
 	 */
 	public static String separator = ";";
-	
+
 	private static String changeFile(String file) {
 		return file.replace("./", "C:\\Users\\Megaport\\Documents\\BOTS\\PSS\\");
 	}
 
 	/**
 	 * Permet de lire le contenu d'une cellule
-	 * 
+	 *
 	 * @param key  Nom de ligne (ID)
 	 * @param var  Nom de colonne
 	 * @param file Chemin vers le fichier cibl�
@@ -251,7 +251,7 @@ public class CSV {
 			return;
 		}
 
-		System.out.println("[CSV] New line added to \"" + file + "\" : " + line);
+		Sys.out.println("[CSV] New line added to \"" + file + "\" : " + line);
 	}
 
 	/**
@@ -315,7 +315,7 @@ public class CSV {
 			return;
 		}
 
-		System.out.println("[CSV] Cell modified to \"" + file + "\" at key:" + key + " ; column:" + var
+		Sys.out.println("[CSV] Cell modified to \"" + file + "\" at key:" + key + " ; column:" + var
 				+ " with content:" + content);
 	}
 }

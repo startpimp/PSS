@@ -7,6 +7,7 @@ import fr.simplgame.pss.command.CommandMap;
 import fr.simplgame.pss.command.SimpleCommand;
 import fr.simplgame.pss.server.ServerManager;
 import fr.simplgame.pss.util.Loader;
+import fr.simplgame.pss.util.Sys;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
@@ -60,7 +61,7 @@ public class CommandDefault {
 
 				if (sendMessage.get()) {
 					if (!command.getAlias().equals("NaN")) {
-						System.out.println(loader[0].getLang());
+						Sys.out.println(loader[0].getLang());
 						embed.addField(
 								command.getName() + syntax + "\n" + loader[0].lang.get("command.help.alias")
 										+ command.getAlias(),

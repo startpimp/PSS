@@ -9,6 +9,7 @@ import fr.simplgame.pss.PSS;
 import fr.simplgame.pss.command.CommandMap;
 import fr.simplgame.pss.util.CSV;
 import fr.simplgame.pss.util.Loader;
+import fr.simplgame.pss.util.Sys;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.ChannelType;
@@ -127,6 +128,9 @@ public class BotListener implements EventListener {
 
 	private void onMessage(MessageReceivedEvent mre) {
 
+		if (mre.getAuthor().isBot())
+			return;
+
 		Loader[] lang = new Loader[2];
 		String userLanguage = CSV.getCell(mre.getAuthor().getId(), "language", "./res/user.csv");
 		String serverLanguage = "NaN";
@@ -141,12 +145,8 @@ public class BotListener implements EventListener {
 		else
 			lang[1] = new Loader(serverLanguage);
 		
-		System.out.println(userLanguage);
-		System.out.println(serverLanguage);
-
-		// If the user is PSS, returning to the top function.
-		if (mre.getAuthor().equals(mre.getJDA().getSelfUser()))
-			return;
+		Sys.out.println(userLanguage);
+		Sys.out.println(serverLanguage);
 
 		String message = mre.getMessage().getContentRaw();
 		if (message.startsWith(commandMap.getTag())) {

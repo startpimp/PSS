@@ -5,6 +5,7 @@ import javax.security.auth.login.LoginException;
 
 import fr.simplgame.pss.command.CommandMap;
 import fr.simplgame.pss.event.BotListener;
+import fr.simplgame.pss.util.Sys;
 import net.dv8tion.jda.api.AccountType;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -22,7 +23,7 @@ public class PSS implements Runnable {
 				.setToken("NjY1NTk4NDAxMjg2NTA0NDU4.XhoBVQ.zfVBpi6pnE2PMyyzQBBdzYqRZ3Y")
 				.setActivity(Activity.listening(CommandMap.tag + "help")).build();
 		jda.addEventListener(new BotListener(commandMap));
-		System.out.println("[SYSTEM] PSS connected");
+		Sys.out.println("[SYSTEM] PSS connected");
 	}
 
 	public JDA getJda() {
@@ -41,7 +42,7 @@ public class PSS implements Runnable {
 				commandMap.commandConsole(scanner.nextLine());
 		}
 		scanner.close();
-		System.out.println("[SYSTEM] Bot stopped");
+		Sys.out.println("[SYSTEM] Bot stopped");
 		PSS.jda.shutdown();
 		System.exit(0);
 	}

@@ -13,6 +13,7 @@ import fr.simplgame.pss.server.ServerManager;
 import fr.simplgame.pss.server.us.LanguageManager;
 import fr.simplgame.pss.server.us.UserManager;
 import fr.simplgame.pss.util.Loader;
+import fr.simplgame.pss.util.Sys;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
@@ -64,13 +65,13 @@ public final class CommandMap {
 	public void commandConsole(String command) {
 		Object[] object = getCommand(command);
 		if (object[0] == null || ((SimpleCommand) object[0]).getExecutorType() == ExecutorType.USER) {
-			System.out.println("Commande inconnue.");
+			Sys.out.println("Commande inconnue.");
 			return;
 		}
 		try {
 			execute(((SimpleCommand) object[0]), command, (String[]) object[1], null, null);
 		} catch (Exception exception) {
-			System.out.println("La methode " + ((SimpleCommand) object[0]).getMethod().getName()
+			Sys.out.println("La methode " + ((SimpleCommand) object[0]).getMethod().getName()
 					+ " n'est pas correctement initialisee.");
 		}
 	}
@@ -83,7 +84,7 @@ public final class CommandMap {
 			execute(((SimpleCommand) object[0]), command, (String[]) object[1], message, lang);
 		} catch (Exception exception) {
 			exception.printStackTrace();
-			System.out.println("La methode " + ((SimpleCommand) object[0]).getMethod().getName()
+			Sys.out.println("La methode " + ((SimpleCommand) object[0]).getMethod().getName()
 					+ " n'est pas correctement initialisee.");
 		}
 		return true;

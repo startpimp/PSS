@@ -5,6 +5,7 @@ import fr.simplgame.pss.command.Command.ExecutorType;
 import fr.simplgame.pss.event.BotListener;
 import fr.simplgame.pss.util.CSV;
 import fr.simplgame.pss.util.Loader;
+import fr.simplgame.pss.util.Sys;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.User;
 
@@ -75,7 +76,7 @@ public class LanguageManager {
 		Loader l = new Loader(args[0]);
 		l.load();
 		BotListener.loaders.add(l);
-		System.out.println(args[0] + " has been added");
+		Sys.out.println(args[0] + " has been added");
 	}
 
 }
