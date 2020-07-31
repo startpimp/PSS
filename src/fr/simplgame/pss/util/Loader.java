@@ -1,19 +1,21 @@
 package fr.simplgame.pss.util;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 public class Loader {
 
 	private String var = "english";
 
+	public Lang lang = new Lang();
+
 	public Loader(String language) {
 		var = language;
+		lang.lang = var;
 		load();
 	}
 
 	public Loader() {
+		lang.lang = var;
 		load();
 	}
 
@@ -21,32 +23,12 @@ public class Loader {
 		return var;
 	}
 
-	public Lang lang = new Lang();
-
 	public void load() {
 		String file = "./res/langs.csv";
 		lang.getVars().clear();
 
 		for (String word : Objects.requireNonNull(CSV.getColumn(var, file))) {
-			lang.vars.put(CSV.getKey(var, word, file), word);
-		}
-
-	}
-
-	public static class Lang {
-
-		public Map<String, String> vars = new HashMap<>();
-
-		public Map<String, String> getVars() {
-			return vars;
-		}
-
-		public String get(String var) {
-			String str = vars.get(var);
-			if (str == null)
-				return "NaN";
-			else
-				return str;
+			lang.getVars().add(CSV.getKey(var, word, file) + "=" + word);
 		}
 
 	}

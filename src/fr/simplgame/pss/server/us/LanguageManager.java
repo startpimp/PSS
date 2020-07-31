@@ -5,10 +5,10 @@ import fr.simplgame.pss.command.Command.ExecutorType;
 import fr.simplgame.pss.event.BotListener;
 import fr.simplgame.pss.util.CSV;
 import fr.simplgame.pss.util.Loader;
-import fr.simplgame.pss.util.Sys;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.User;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 @SuppressWarnings("unused")
@@ -37,8 +37,8 @@ public class LanguageManager {
 		}
 
 		boolean languageFound = false;
-		String[] langs = CSV.getLine("id", "./res/langs.csv").split(";");
-		for (String lang : langs) {
+		String[] langArray = CSV.getLine("id", "./res/langs.csv").split(";");
+		for (String lang : langArray) {
 			if (!lang.equalsIgnoreCase("id") && lang.equalsIgnoreCase(args[0])) {
 				CSV.modifyCell(user.getId(), "language", args[0].toLowerCase(), file);
 				languageFound = true;
@@ -76,7 +76,7 @@ public class LanguageManager {
 		Loader l = new Loader(args[0]);
 		l.load();
 		BotListener.loaders.add(l);
-		Sys.out.println(args[0] + " has been added");
+		System.out.println(args[0] + " has been added");
 	}
 
 }

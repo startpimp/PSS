@@ -2,7 +2,10 @@ package fr.simplgame.pss.util;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -39,7 +42,7 @@ public class CSV {
 		file = changeFile(file);
 		try (FileInputStream fis = new FileInputStream(new File(file))) {
 
-			Scanner sc = new Scanner(fis);
+			Scanner sc = new Scanner(fis, "UTF-8");
 			while (sc.hasNextLine()) {
 
 				String line = sc.nextLine();
@@ -49,17 +52,17 @@ public class CSV {
 
 					for (int i = 0; i < vars.length; i++) {
 
-						if (new String(vars[i].getBytes(), StandardCharsets.UTF_8).equals(var))
+						if (vars[i].equals(var))
 							column = i;
 
 					}
 
 				} else {
 
-					if (new String(vars[0].getBytes(), StandardCharsets.UTF_8).equals(key)) {
+					if (vars[0].equals(key)) {
 
 						sc.close();
-						return new String(vars[column].getBytes(), StandardCharsets.UTF_8);
+						return vars[column];
 
 					}
 
@@ -251,7 +254,7 @@ public class CSV {
 			return;
 		}
 
-		Sys.out.println("[CSV] New line added to \"" + file + "\" : " + line);
+		System.out.println("[CSV] New line added to \"" + file + "\" : " + line);
 	}
 
 	/**
@@ -260,7 +263,7 @@ public class CSV {
 	 * @param key     Nom de ligne (ID)
 	 * @param var     Nom de colonne
 	 * @param content Nouveau contenu
-	 * @param file    Chemin vers le fichier cibl�
+	 * @param file    Chemin vers le fichier ciblé
 	 */
 	public static void modifyCell(String key, String var, String content, String file) {
 		file = changeFile(file);
@@ -303,7 +306,14 @@ public class CSV {
 		}
 
 		// Rewriting file with modified contents
-		try (PrintWriter pw = new PrintWriter(new FileOutputStream(new File(file)))) {
+		OutputStream os = null;
+		try {
+			os = new FileOutputStream(new File(file));
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		assert os != null;
+		try (PrintWriter pw = new PrintWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8))) {
 			for (String line : lines) {
 				if (line.split(separator)[0].equals(key))
 					pw.println(newLine);
@@ -315,7 +325,7 @@ public class CSV {
 			return;
 		}
 
-		Sys.out.println("[CSV] Cell modified to \"" + file + "\" at key:" + key + " ; column:" + var
+		System.out.println("[CSV] Cell modified to \"" + file + "\" at key:" + key + " ; column:" + var
 				+ " with content:" + content);
 	}
 }
